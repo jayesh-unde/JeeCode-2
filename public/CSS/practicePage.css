@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    transition: all 0.3s ease;
+}
+
+body {
+    background-color: #f2f3f7;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.question {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.difficulty {
+    font-weight: 600;
+    color: #27a844; /* green shade indicating difficulty */
+}
+
+.timer {
+    background-color: #ff6347; /* tomato color for timer */
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.text {
+    font-size: 18px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.options label {
+    display: block;
+    margin-bottom: 15px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.options label:hover {
+    background-color: #e0e0e0;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.result-message {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.options label.correct {
+    background-color: #27a844;  /* green for correct answer */
+    border-color: #219737;
+    color: #fff;
+}
+
+.options label.wrong {
+    background-color: #ff6347;  /* red for wrong answer */
+    border-color: #e05340;
+    color: #fff;
+}
+
+.options label span {
+    font-size: 18px;
+    display: inline-block;
+}
+
+.options label span.correct-answer {
+    display: block;
+    font-size: 12px;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.options label span.wrong-answer {
+    display: block;
+    font-size: 12px;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.8);
+}

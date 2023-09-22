@@ -1,0 +1,24 @@
+body {
+    height: 100vh;
+    font-family: Assistant, sans-serif;
+    display: flex;
+    background-color: rgb(255, 250, 245);
+  }
+  .login {
+    color: rgb(0, 0, 0);
+    background: #e8fae1;
+    margin: auto;
+    width: 25%;
+    border-radius: 3%;
+    border: 2px solid rgb(137, 253, 141);
+    box-shadow: 2px 2px 2px 1px rgb(189, 254, 159);
+    padding: 3%;
+  }
+  .login .head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: larger;
+    font-weight: bolder;
+    margin: 10%;
+  }
