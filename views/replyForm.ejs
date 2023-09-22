@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reply Form</title>
+    <link rel="stylesheet" href="/CSS/post.css"> <!-- Linking to the existing CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Reply to Post</h1>
+        <form action="/posts/<%= postId %>/<%= questionId  %>/reply" method="post" class="post-form">
+            <input type="text" placeholder="Enter your username" name="username" value="<%= username  %>" readonly class="user">
+            <textarea name="content" placeholder="Write your reply here" cols="30" rows="10" class="text"></textarea>
+            <button>Submit Reply</button>
+        </form>
+    </div>
+</body>
+</html>

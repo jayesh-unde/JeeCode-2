@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts</title>
+    <link rel="stylesheet" href="/CSS/post.css"> <!-- Make sure to set the correct path -->
+</head>
+<body>
+    <h1>Jee Questions Discussion Forum</h1>
+    <% for (post of posts) { %>
+        
+<div class="post">
+    <div class="post-content">
+        <h3>@ <%= post.username %></h3>
+        <p><%= post.content %></p>
+    </div>
+    <div class="action-buttons">
+        <a href="http://localhost:3000/posts/<%= post.postid %>/<%= questionId %>">See in detail</a>
+        
+        <!-- Only show edit and delete options if post belongs to logged-in user -->
+        <% if(post.username === username) { %>
+            <a href="http://localhost:3000/posts/<%= post.postid %>/<%= questionId %>/edit">Edit</a>
+            <form method="post" action="/posts/<%= post.postid %>/<%= questionId %>?_method=DELETE">
+                <button>Delete</button>
+            </form>
+        <% } %>
+    </div>
+</div>
+    <% } %>
+    <div class="new-discussion">
+        <h3><a href="http://localhost:3000/posts/<%= questionId %>/new">Create a New Discussion</a></h3>
+        </div>
+        
+        </body>
+        </html>
