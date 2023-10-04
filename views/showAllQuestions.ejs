@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Questions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="/CSS/showAllQuestions.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <!-- jee logo  -->
+          <a class="navbar-brand" href="#"><img src="/images/jee background.png" alt="logo.png" width="150px" height="50px"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000">Explore</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/subjectSelection">Problems</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contest</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+            </ul>
+            
+
+            <!-- profile dropdown  -->
+            <div class="btn-group" role="group">
+                <button id="Drop1" type="button" class="btn btn-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="/images/profile photo.png" alt="profile.png" class="profile-img">
+                  <%= username  %>
+                </button>
+                <ul class="dropdown-menu " aria-labelledby="Drop1">
+                    
+                  <li><a class="dropdown-item" href="http://localhost:3000">log-out</a></li>
+                </ul>
+              </div>
+
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item btn-premium" style="margin-left: 0;">
+                    <a class="nav-link" href="#">Premium</a>
+                </li>
+            </ul>
+
+          </div>
+        </div>
+      </nav>
+    <div class="subject-header">
+        <%= subject.charAt(0).toUpperCase() + subject.slice(1) %> Questions
+    </div>
+    
+    <br>
+    <hr>
+    <form method="GET" action="/questions/<%= subject %>" class="d-flex search">
+    
+        <select name="difficulty" class="form-control me-2">
+            <option value="">All Difficulties</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+    
+        <input type="text" name="search" placeholder="Search for a question..." class="form-control me-2" />
+        <button type="submit" class="btn btn-outline-success">Search</button>
+    </form>
+    <hr>
+<!-- grid start -->
+    <div>
+        
+        <div class="container">
+        <!-- make a row to mention all the colums first -->
+        <div class="row row-head">
+            <div class="col-1">
+                Id
+            </div>
+            <div class="col-8">
+                Question Name
+            </div>
+            <div class="col-3">
+                Difficulty
+            </div>
+        </div>
+
+        <hr>
+        <!-- now all the questions will be fetched by this loop -->
+        <!-- and all the information will be displayed in the grid of the page  -->
+        <!-- and all the information will be displayed in the grid of the page -->
+            <% result.rows.forEach(question=> { %>
+                <div class="row">
+                    <!-- first column -->
+                    <div class="col-1">
+                        <%= question.id %>.
+                    </div>
+
+                    <!-- second column  -->
+                    <div class="col-8">
+                        <a href="http://localhost:3000/practicePage/<%= question.id %>">
+                            <%= question.name %></a>
+                    </div>
+                    <!-- third column -->
+                    <div class="col-3">
+                        <span class="difficulty" id=<%=question.difficulty %>><%= question.difficulty.charAt(0).toUpperCase() + question.difficulty.slice(1) %></span>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+            <br><br>
+
+            <!-- <div class="-mx-4 transition-opacity md:mx-0">
+                <div role="table" style="min-width:0px" class="border-spacing-0 overflow-auto">
+                    <div class="inline-block min-w-full">
+                        <div class="border-divider-border-2 dark:border-dark-divider-border-2 border-b">
+                            <div role="row" style="display:flex;flex:1 0 auto;min-width:0px">
+                                <div colspan="1" role="columnheader"
+                                    style="box-sizing:border-box;flex:52 0 auto;min-width:0px;width:52px"
+                                    class="mx-2 py-[11px] font-normal text-label-3 dark:text-dark-label-3">
+                                    <div class="flex items-center justify-between">
+                                        <div class="overflow-hidden text-ellipsis">Status</div>
+                                    </div>
+                                </div>
+                                <div colspan="1" role="columnheader"
+                                    style="box-sizing:border-box;flex:260 0 auto;min-width:0px;width:260px;cursor:pointer"
+                                    class="mx-2 py-[11px] font-normal text-label-3 dark:text-dark-label-3 hover:text-gray-7 dark:hover:text-dark-gray-7 group">
+                                    <div class="flex items-center justify-between">
+                                        <div class="overflow-hidden text-ellipsis">Title</div><span
+                                            class="text-gray-5 dark:text-dark-gray-5 ml-2 h-3.5 w-3.5 group-hover:text-gray-7 dark:group-hover:text-dark-gray-7"><svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" width="1em"
+                                                height="1em" fill="currentColor">
+                                                <path
+                                                    d="M10.9052 5.47044L7.48504 2.19872C7.47354 2.18772 7.46161 2.1771 7.44926 2.16687C7.16479 1.93123 6.72125 1.94709 6.45859 2.20229L3.09299 5.47222C3.0332 5.53031 3 5.60648 3 5.68555C3 5.85922 3.15694 6.00001 3.35053 6.00001H10.6495C10.7385 6.00001 10.8243 5.96959 10.8893 5.91493C11.0305 5.79613 11.0376 5.59712 10.9052 5.47044Z">
+                                                </path>
+                                            </svg></span>
+                                    </div>
+                                </div>
+                                <div colspan="1" role="columnheader"
+                                    style="box-sizing:border-box;flex:54 0 auto;min-width:0px;width:54px"
+                                    class="mx-2 py-[11px] font-normal text-label-3 dark:text-dark-label-3">
+                                    <div class="flex items-center justify-between">
+                                        <div class="overflow-hidden text-ellipsis">Solution</div>
+                                    </div>
+                                </div>
+                                <div colspan="1" role="columnheader"
+                                    style="box-sizing:border-box;flex:100 0 auto;min-width:0px;width:100px;cursor:pointer"
+                                    class="mx-2 py-[11px] font-normal text-label-3 dark:text-dark-label-3 hover:text-gray-7 dark:hover:text-dark-gray-7 group">
+                                    <div class="flex items-center justify-between">
+                                        <div class="overflow-hidden text-ellipsis">Acceptance</div><span
+                                            class="text-gray-5 dark:text-dark-gray-5 ml-2 h-3.5 w-3.5 group-hover:text-gray-7 dark:group-hover:text-dark-gray-7"><svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em"
+                                                height="1em" fill="currentColor">
+                                                <path
+                                                    d="M18.695 9.378L12.83 3.769a1.137 1.137 0 00-.06-.054c-.489-.404-1.249-.377-1.7.06L5.303 9.381a.51.51 0 00-.16.366c0 .297.27.539.602.539h12.512a.64.64 0 00.411-.146.501.501 0 00.028-.762zM12.77 20.285c.021-.017.042-.035.062-.054l5.863-5.609a.5.5 0 00-.028-.762.64.64 0 00-.41-.146H5.743c-.332 0-.601.242-.601.54a.51.51 0 00.16.365l5.769 5.606c.45.437 1.21.464 1.698.06z">
+                                                </path>
+                                            </svg></span>
+                                    </div>
+                                </div>
+                                <div colspan="1" role="columnheader"
+                                    style="box-sizing:border-box;flex:84 0 auto;min-width:0px;width:84px;cursor:pointer"
+                                    class="mx-2 py-[11px] font-normal text-label-3 dark:text-dark-label-3 hover:text-gray-7 dark:hover:text-dark-gray-7 group">
+                                    <div class="flex items-center justify-between">
+                                        <div class="overflow-hidden text-ellipsis">Difficulty</div><span
+                                            class="text-gray-5 dark:text-dark-gray-5 ml-2 h-3.5 w-3.5 group-hover:text-gray-7 dark:group-hover:text-dark-gray-7"><svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em"
+                                                height="1em" fill="currentColor">
+                                                <path
+                                                    d="M18.695 9.378L12.83 3.769a1.137 1.137 0 00-.06-.054c-.489-.404-1.249-.377-1.7.06L5.303 9.381a.51.51 0 00-.16.366c0 .297.27.539.602.539h12.512a.64.64 0 00.411-.146.501.501 0 00.028-.762zM12.77 20.285c.021-.017.042-.035.062-.054l5.863-5.609a.5.5 0 00-.028-.762.64.64 0 00-.41-.146H5.743c-.332 0-.601.242-.601.54a.51.51 0 00.16.365l5.769 5.606c.45.437 1.21.464 1.698.06z">
+                                                </path>
+                                            </svg></span>
+                                    </div>
+                                </div>
+                                <div colspan="1" role="columnheader"
+                                    style="box-sizing:border-box;flex:84 0 auto;min-width:0px;width:84px"
+                                    class="mx-2 py-[11px] font-normal text-label-3 dark:text-dark-label-3">
+                                    <div class="flex items-center justify-between">
+                                        <div class="overflow-hidden text-ellipsis">Frequency</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="rowgroup">
+                            <div role="row" style="display:flex;flex:1 0 auto;min-width:0px"
+                                class="odd:bg-layer-1 even:bg-overlay-1 dark:odd:bg-dark-layer-bg dark:even:bg-dark-fill-4"
+                                problem-id="92" is-premium="false">
+                                <div role="cell" style="box-sizing:border-box;flex:52 0 auto;min-width:0px;width:52px"
+                                    class="mx-2 flex items-center py-[11px]"><a
+                                        href="/problems/reverse-linked-list-ii/?envType=daily-question&amp;envId=2023-09-07"><svg
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em"
+                                            height="1em" fill="currentColor"
+                                            class="h-[18px] w-[18px] cursor-pointer text-green-s dark:text-dark-green-s">
+                                            <path fill-rule="evenodd"
+                                                d="M19 11.063V7h-2v1a1 1 0 11-2 0V7H9v1a1 1 0 01-2 0V7H5v4.063h14zm0 2H5V19h14v-5.938zM9 5h6V4a1 1 0 112 0v1h2a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2V4a1 1 0 012 0v1z"
+                                                clip-rule="evenodd"></path>
+                                        </svg></a></div>
+                                <div role="cell" style="box-sizing:border-box;flex:260 0 auto;min-width:0px;width:260px"
+                                    class="mx-2 flex items-center py-[11px]">
+                                    <div class="max-w-[302px] flex items-center overflow-hidden">
+                                        <div class="overflow-hidden">
+                                            <div class="flex items-center">
+                                                <div class="truncate"><a
+                                                        href="/problems/reverse-linked-list-ii/?envType=daily-question&amp;envId=2023-09-07"
+                                                        class="h-5 hover:text-blue-s dark:hover:text-dark-blue-s">92.
+                                                        Reverse Linked List II</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="cell" style="box-sizing:border-box;flex:54 0 auto;min-width:0px;width:54px"
+                                    class="mx-2 flex items-center py-[11px]"><a aria-label="solution"
+                                        href="/problems/reverse-linked-list-ii/solution" class="truncate"><svg
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em"
+                                            height="1em" fill="currentColor"
+                                            class="text-purple dark:text-dark-purple h-5 w-5">
+                                            <path
+                                                d="M10 15.464v-3.927a.8.8 0 011.259-.656l2.805 1.964a.8.8 0 010 1.31l-2.805 1.964A.8.8 0 0110 15.464z">
+                                            </path>
+                                            <path
+                                                d="M7 4a1 1 0 00-1 1v14a1 1 0 001 1h10a1 1 0 001-1V9h-3a2 2 0 01-2-2V4H7zm8 .6V7h1.92L15 4.6zM4 5a3 3 0 013-3h7.039a3 3 0 012.342 1.126l2.962 3.701A3 3 0 0120 8.702V19a3 3 0 01-3 3H7a3 3 0 01-3-3V5z">
+                                            </path>
+                                        </svg></a></div>
+                                <div role="cell" style="box-sizing:border-box;flex:100 0 auto;min-width:0px;width:100px"
+                                    class="mx-2 flex items-center py-[11px]"><span>46.3%</span></div>
+                                <div role="cell" style="box-sizing:border-box;flex:84 0 auto;min-width:0px;width:84px"
+                                    class="mx-2 flex items-center py-[11px]"><span
+                                        class="text-yellow dark:text-dark-yellow">Medium</span></div>
+                                <div role="cell" style="box-sizing:border-box;flex:84 0 auto;min-width:0px;width:84px"
+                                    class="mx-2 flex items-center py-[11px]">
+                                    <div class="flex h-full w-full flex-row items-center"><span
+                                            class="h-2 flex-1 rounded-l-lg bg-fill-3 dark:bg-dark-fill-3" title="48%"
+                                            style="border-bottom-right-radius: 0.5rem; overflow: hidden; border-top-right-radius: 0.5rem;">
+                                            <div class="inner-progressbar"
+                                                style="background-color: rgb(98, 197, 85); width: 48.0998%; height: 0.5rem; border-radius: 0.5rem;">
+                                            </div>
+                                        </span></div>
+                                </div>
+                            </div>
+                            <div role="row" style="display:flex;flex:1 0 auto;min-width:0px"
+                                class="odd:bg-layer-1 even:bg-overlay-1 dark:odd:bg-dark-layer-bg dark:even:bg-dark-fill-4"
+                                problem-id="1" is-premium="false">
+                                <div role="cell" style="box-sizing:border-box;flex:52 0 auto;min-width:0px;width:52px"
+                                    class="mx-2 flex items-center py-[11px]"><span><svg viewBox="0 0 24 24"
+                                            focusable="false" class="chakra-icon css-1hwpjif">
+                                            <path
+                                                d="M21.6004 12C21.6004 17.302 17.3023 21.6 12.0004 21.6C6.69846 21.6 2.40039 17.302 2.40039 12C2.40039 6.69809 6.69846 2.40002 12.0004 2.40002C13.5066 2.40002 14.9318 2.74689 16.2004 3.3651M19.8004 6.00002L11.4004 14.4L9.00039 12"
+                                                stroke="currentColor" stroke-width="2.3" stroke-linecap="round"
+                                                stroke-linejoin="round"></path>
+                                        </svg></span></div>
+                                <div role="cell" style="box-sizing:border-box;flex:260 0 auto;min-width:0px;width:260px"
+                                    class="mx-2 flex items-center py-[11px]">
+                                    <div class="max-w-[302px] flex items-center overflow-hidden">
+                                        <div class="overflow-hidden">
+                                            <div class="flex items-center">
+                                                <div class="truncate"><a href="/problems/two-sum"
+                                                        class="h-5 hover:text-blue-s dark:hover:text-dark-blue-s">1. Two
+                                                        Sum</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="cell" style="box-sizing:border-box;flex:54 0 auto;min-width:0px;width:54px"
+                                    class="mx-2 flex items-center py-[11px]"><a aria-label="solution"
+                                        href="/problems/two-sum/solution" class="truncate"><svg
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em"
+                                            height="1em" fill="currentColor"
+                                            class="text-purple dark:text-dark-purple h-5 w-5">
+                                            <path
+                                                d="M10 15.464v-3.927a.8.8 0 011.259-.656l2.805 1.964a.8.8 0 010 1.31l-2.805 1.964A.8.8 0 0110 15.464z">
+                                            </path>
+                                            <path
+                                                d="M7 4a1 1 0 00-1 1v14a1 1 0 001 1h10a1 1 0 001-1V9h-3a2 2 0 01-2-2V4H7zm8 .6V7h1.92L15 4.6zM4 5a3 3 0 013-3h7.039a3 3 0 012.342 1.126l2.962 3.701A3 3 0 0120 8.702V19a3 3 0 01-3 3H7a3 3 0 01-3-3V5z">
+                                            </path>
+                                        </svg></a></div>
+                                <div role="cell" style="box-sizing:border-box;flex:100 0 auto;min-width:0px;width:100px"
+                                    class="mx-2 flex items-center py-[11px]"><span>50.6%</span></div>
+                                <div role="cell" style="box-sizing:border-box;flex:84 0 auto;min-width:0px;width:84px"
+                                    class="mx-2 flex items-center py-[11px]"><span
+                                        class="text-olive dark:text-dark-olive">Easy</span></div>
+                                <div role="cell" style="box-sizing:border-box;flex:84 0 auto;min-width:0px;width:84px"
+                                    class="mx-2 flex items-center py-[11px]">
+                                    <div class="flex h-full w-full flex-row items-center"><span
+                                            class="h-2 flex-1 rounded-l-lg bg-fill-3 dark:bg-dark-fill-3" title="100%"
+                                            style="border-bottom-right-radius: 0.5rem; overflow: hidden; border-top-right-radius: 0.5rem;">
+                                            <div class="inner-progressbar"
+                                                style="background-color: rgb(98, 197, 85); width: 100%; height: 0.5rem; border-radius: 0.5rem;">
+                                            </div>
+                                        </span></div>
+                                </div>
+                            </div>
+                            <div role="row" style="display:flex;flex:1 0 auto;min-width:0px"
+                                class="odd:bg-layer-1 even:bg-overlay-1 dark:odd:bg-dark-layer-bg dark:even:bg-dark-fill-4"
+                                problem-id="2" is-premium="false">
+                                <div role="cell" style="box-sizing:border-box;flex:52 0 auto;min-width:0px;width:52px"
+                                    class="mx-2 flex items-center py-[11px]"><span><svg viewBox="0 0 24 24"
+                                            focusable="false" class="chakra-icon css-1hwpjif">
+                                            <path
+                                                d="M21.6004 12C21.6004 17.302 17.3023 21.6 12.0004 21.6C6.69846 21.6 2.40039 17.302 2.40039 12C2.40039 6.69809 6.69846 2.40002 12.0004 2.40002C13.5066 2.40002 14.9318 2.74689 16.2004 3.3651M19.8004 6.00002L11.4004 14.4L9.00039 12"
+                                                stroke="currentColor" stroke-width="2.3" stroke-linecap="round"
+                                                stroke-linejoin="round"></path>
+                                        </svg></span></div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+
+</html>

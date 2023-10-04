@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contests</title>
+    <link rel="stylesheet" href="/CSS/contest.css"> <!-- assuming your CSS will be named contest.css and is in a folder named styles -->
+</head>
+<body>
+
+    <div class="contest-container">
+        <h1>Available Tests</h1>
+    
+        <% tests.forEach(test => { %>
+        <div class="test-card">
+            <h2>TestId: <%= test.testid %></h2>
+            <p>Type: <%= test.type %></p>
+            <p>Duration: <%= test.duration %> minutes</p>
+            <p>Total Questions: <%= test.totalquestions %></p>
+            <p>Date: <%= test.testdate %></p>
+            <% if (testsTaken[test.testid]) { %>
+                <a href="/testResult/<%= username %>/<%= test.testid %>" class="view-result-btn">View Results</a>
+            <% } else { %>
+                <a href="/testInstructions/<%= test.testid %>" class="take-test-btn">Take Test</a>
+            <% } %>
+        </div>
+        <% }); %>
+    </div>
+    
+
+</body>
+</html>

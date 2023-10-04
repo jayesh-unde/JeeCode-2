@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... meta tags, title, etc. ... -->
+     <style>
+        body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.result-container {
+    width: 60%;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.result-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.result-card h2 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.result-card p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+a {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+}
+
+/* Pie chart */
+.result-card::before {
+    content: "";
+    display: block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 20px auto;
+    background: conic-gradient(
+        green <%= testResult.correctquestion %>%, 
+        red 0 <%= testResult.wrongquestion %>%, 
+        #d3d3d3 0 <%= testResult.unattempted %>%
+    );
+}
+
+     </style>
+</head>
+<body>
+    <div class="result-container">
+        <h1>Test Results</h1>
+
+        <div class="result-card">
+            <h2>TestId: <%= testResult.testId %></h2>
+            <p><strong>Score:</strong> <%= testResult.score %></p>
+            <p><strong>Correct Answers:</strong> <%= testResult.correctquestion %></p>
+            <p><strong>Wrong Answers:</strong> <%= testResult.wrongquestion %></p>
+            <p><strong>Unattempted:</strong> <%= testResult.unattempted %></p>
+            <p><strong>Time Spent:</strong> <%= testResult.timespent %> seconds</p>
+        </div>
+
+        <a href="/contest">Return to Test Page</a>
+    </div>
+</body>
+</html>

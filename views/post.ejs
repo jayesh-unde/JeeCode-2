@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts</title>
+    <link rel="stylesheet" href="/CSS/post.css"> <!-- Make sure to set the correct path -->
+    <style>
+        /* Add styles to improve the UI */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+
+header {
+    background-color: #fff5f5;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+h1 {
+    font-size: 28px;
+    margin: 0;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.post {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+.post a, .post a:hover, .post a:active, .post a:visited {
+    text-decoration: none;
+    color: inherit;
+    text-decoration: none; 
+    color: black; /* Or whatever color you want the text to be */
+    background-color: inherit;
+    display: block;
+}
+
+.post h3 {
+    font-size: 20px;
+    margin: 0;
+    color: #333;
+}
+
+.post p {
+    margin-top: 10px;
+    color: #555;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.action-buttons {
+    margin-top: 10px;
+}
+
+.action-buttons a {
+    text-decoration: none;
+    color: #3498db;
+    margin-right: 10px;
+}
+
+.action-buttons button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.new-discussion {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.new-discussion a {
+    text-decoration: none;
+    color: #3498db;
+    font-size: 18px;
+}
+
+.social-icons {
+            display: flex;
+            justify-content: center;
+            border: 3px;
+            border-radius: 1px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin: 0 20px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        /* Add styles for the social media section */
+.social-media {
+    background-color: #f2f2f2; /* Colorful background */
+    padding: 20px;
+    text-align: center;
+}
+
+.separator {
+    border-top: 2px solid #3498db; /* Colorful line above icons */
+    margin-top: 10px;
+}
+
+h2 {
+    margin-top: 20px; /* Spacing above the heading */
+    color: #333;
+    font-size: 20px;
+}
+
+/* Updated styles for the social media section */
+.social-media-box {
+    background-color: #fff; /* White box */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for the box */
+    margin-top: 20px;
+    text-align: center;
+}
+
+.social-media {
+    margin-bottom: 20px; /* Spacing between the box and the contest section */
+}
+
+#edit_forum{
+    background-color:blue;
+}
+
+h2 {
+    color: #333;
+    font-size: 20px;
+}
+
+/* Colorful social media icons with different background colors */
+.social-icons {
+    list-style: none;
+    padding: 1;
+    border : 3px grey;
+}
+
+.social-icons li {
+    display: inline;
+    margin: 0 10px; /* Spacing between icons */
+}
+
+.social-icons a {
+    text-decoration: none;
+}
+
+.social-icons img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.social-icons img[src*="facebook-icon.png"] {
+    background-color: #1877f2; /* Facebook color */
+}
+
+.social-icons img[src*="twitter-icon.png"] {
+    background-color: #1da1f2; /* Twitter color */
+}
+
+.social-icons img[src*="instagram-icon.png"] {
+    background-color: #c32aa3; /* Instagram color */
+}
+.post-link {
+    text-decoration: none; /* Removes underline from link */
+    color: inherit; /* Ensures link takes the same color as surrounding text */
+    display: block; /* Makes the entire area clickable */
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Discussion Forum:<%= questionName %></h1>
+    </header>
+    
+    <main>
+        <% for (post of posts) { %>
+            <div class="post">
+                <a href="http://localhost:3000/posts/<%= post.postid %>/<%= questionId %>" class="post-link">
+                    <div class="post-content">
+                        <h3>@<%= post.username %></h3>
+                        <p><%= post.content %></p>
+                    </div>
+                </a> <!-- Close the anchor tag here -->
+                
+                <div class="action-buttons">
+                    <% if (post.username === username) { %>
+                        <form action="/posts/<%= post.postid %>/<%= questionId %>/edit" onclick="event.stopPropagation();">
+                            <button id="edit_forum">Edit</button>
+                        </form>
+                        <br><br>
+                        <form method="post" action="/posts/<%= post.postid %>/<%= questionId %>?_method=DELETE" onclick="event.stopPropagation();">
+                            <button>Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
+        
+    </main>
+
+    <div class="new-discussion">
+        <h3><a href="http://localhost:3000/posts/<%= questionId %>/new">Create a New Discussion</a></h3>
+    </div>
+    <div class="social-media-box">
+        <div class="social-media">
+            <h2>Follow Us</h2>
+            <ul class="social-icons">
+                <li><a href="#"><img src="/Images/snapchat-icon.png" alt="Snapchat"></a></li>
+                <li><a href="#"><img src="/Images/twitter-icon.png" alt="Twitter"></a></li>
+                <li><a href="#"><img src="/Images/Instagram-icon.jpeg" alt="Instagram"></a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

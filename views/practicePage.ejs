@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Question Page</title>
+    <link rel="stylesheet" href="/CSS/practicePage.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="question">
+            <div class="header">
+                <span class="difficulty"></span>
+                <span class="timer" id="timer">00:00</span>
+            </div>
+            
+            <div><h2><%= question.name  %></h2></div>
+            <div><h3><%= question.difficulty %></h3></div>
+
+            <p class="text"><%= question.description  %></p>
+
+            <form method="post" action="/insertSolvedData">
+                <label>
+                    <input type="radio" name="answers" value="A">
+                    <span>
+                        <%= question.optiona %>
+                    </span>
+                </label><br>
+                <label>
+                    <input type="radio" name="answers" value="B">
+                    <span>
+                        <%= question.optionb %>
+                    </span>
+                </label><br>
+                <label>
+                    <input type="radio" name="answers" value="C">
+                    <span>
+                        <%= question.optionc %>
+                    </span>
+                </label><br>
+                <label>
+                    <input type="radio" name="answers" value="D">
+                    <span>
+                        <%= question.optiond %>
+                    </span>
+                </label><br>
+
+                <input type="hidden" name="username" value="<%= username %>">
+                <input type="hidden" name="questionId" value="<%= question.id %>">
+                <input type="hidden" id="timeInput" name="timespent" value="">
+                <input type="hidden" name="date" value="<%= new Date().toISOString().split('T')[0] %>">
+                <input type="hidden" name="doneStatus" value="true">
+                <input type="hidden" name="subject" value="<%= question.subject %>">
+
+                <button type="button" id="checkBtn">Submit</button>
+            </form>
+            
+            <a href="http://localhost:3000/post/<%= question.id %>">Discussion Forum</a>
+
+            <!-- <div class="result hidden" id="result">
+                <p class="result-message"></p>
+                <button type="button" id="retryBtn">Retry</button>
+            </div> -->
+        </div>
+    </div>
+
+    <script>
+        let time = 0;
+        const timerDisplay = document.querySelector('.timer');
+        const submitButton = document.getElementById("checkBtn");
+        const timeInput = document.getElementById("timeInput");
+    
+        const timerInterval = setInterval(function() {
+            time++;
+            const minutes = Math.floor(time / 60);
+            const seconds = time % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }, 1000);
+    
+        submitButton.addEventListener("click", function() {
+              // Stop the timer
+            
+            
+            // Check the user's answer
+            const userAnswer = document.querySelector("input[type='radio']:checked").value;
+            if (userAnswer === "<%= question.correctanswer %>") {
+                alert("Correct Answer!");
+                clearInterval(timerInterval);
+                timeInput.value = time;
+                this.form.submit();
+            } else {
+                alert("Wrong Answer!");
+            }
+        });
+    </script>
+
+</body>
+</html>

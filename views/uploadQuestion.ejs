@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Question</title>
+    <link rel="stylesheet" href="/CSS/uploadQuestion.css">
+</head>
+
+<body>
+    <form action="/UploadQuestion" method="POST">
+        <label>Question Name: <input type="text" name="name"></label><br>
+        <label>Description: <textarea name="description"></textarea></label><br>
+        <label>Option A: <input type="text" name="optionA"></label><br>
+        <label>Option B: <input type="text" name="optionB"></label><br>
+        <label>Option C: <input type="text" name="optionC"></label><br>
+        <label>Option D: <input type="text" name="optionD"></label><br>
+        <label>Correct Answer: 
+            <select name="correctAnswer">
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+            </select>
+        </label><br>
+        <label>Difficulty Level: 
+            <select name="difficulty">
+                <option>easy</option>
+                <option>medium</option>
+                <option>hard</option>
+            </select>
+        </label><br>
+        <label>Subject: 
+            <select name="subject">
+                <option>physics</option>
+                <option>chemistry</option>
+                <option>maths</option>
+            </select>
+        </label><br>
+        <label>Topic:
+            <input type="text" name="topic" placeholder="Enter topic (e.g. Kinematics)">
+        </label><br>
+
+        <label>Points:
+            <input type="number" name="points" min="1" max="100" placeholder="Assign points (1-100)">
+        </label><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,288 @@
+/* body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    } */
+    body{
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;  /* Stack children vertically */
+        min-height: 100vh;
+        
+    }
+    
+    .content-wrapper {
+        flex: 1;                 /* Takes up all available space pushing the footer down */
+    }
+    
+    .navBar {
+    background-color: #ffffff;
+    height: 60px;
+    width: 100%;
+    padding: 8px 40px;  /* adding 40px padding to both sides for a balanced look */
+    display: flex;
+    /* justify-content: space-between; aligns items on opposite ends */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* subtle shadow for elevation */
+    }
+    
+    
+    .navItemLeft li, .navItemRight li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    }
+    
+    
+    
+    .navItemLeft {
+    display: flex;
+    margin-left: 10vw;
+    align-items: center;
+    gap: 20px; /* Using gap for equal spacing between items */
+    }
+    
+    .navItemLeft a {
+    text-decoration: none;
+    margin-left: 1vw;
+    color: #333;
+    transition: color 0.3s;
+    }
+    
+    .navItemLeft a:hover {
+    color: #0077b6;
+    }
+
+    .profile-img{
+        width: 4vw;
+        margin-top: 1vw;
+    }
+    
+    .navItemRight {
+    display: flex;
+    margin-left: 30vw;
+    align-items: center;
+    gap: 15px;
+    }
+    
+    .navItemRight button {
+    background-color: #0077b6;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    margin-left: 1vw;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    }
+    
+    .navItemRight button:hover {
+    background-color: #005a8d;
+    }
+    
+    .catchyTag {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.5rem;
+    background-color: #ffffff;
+    margin: 20px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .cards-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 0 40px;
+    margin-bottom: 30px; /* Consistent padding */
+    }
+    
+    .card {
+    background-color: #ffffff;
+    width: 400px;
+    margin: 20px;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+    }
+    
+    .card:hover {
+    transform: translateY(-10px);
+    }
+    
+    .card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    }
+    
+    .card-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    }
+    
+    .card-info {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    }
+    footer {
+    background-color: #2c3e50;  /* Dark Blue Color */
+    color: #ffffff;
+    padding: 20px 0;
+    /* position: relative; */
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding doesn't add to width */
+    margin: 0;  /* Remove any margins */
+    left: 0;  /* Pin to the left edge of the screen */
+    right: 0; /* Pin to the right edge of the screen */
+    }
+    
+    .footer-content {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    }
+    
+    .footer-section {
+    flex: 1;
+    padding: 0 20px;
+    }
+    
+    .footer-section h2 {
+    border-bottom: 4px solid #e74c3c; /* Bright Red Color */
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    }
+    
+    .footer-section ul {
+    padding-left: 0;
+    }
+    
+    .footer-section ul li {
+    list-style-type: none;
+    margin-bottom: 10px;
+    }
+    
+    .footer-section ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s;
+    }
+    
+    .footer-section ul li a:hover {
+    color: #e74c3c;  /* Bright Red Color for hover effect */
+    }
+    
+    .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    }
+    
+    .footer-section p {
+    margin-bottom: 10px;
+    }
+
+    .navbar {
+        padding: 0 50px;
+        font-size: larger;
+    }
+    
+    .nav-item {
+        margin: 0 7px;
+    }
+    
+    .search {
+        margin: 5px 20px;
+        width: max-content;
+    }
+    .btn-premium{
+        height: 40px;
+        /* border: black solid 2px; */
+        background-color:#ffb7005f;
+        border-radius: 8px;
+    }
+    
+    /* .btn-premium .nav-link{
+        margin: 0 5px;
+        padding-top: 6px;
+    } */
+    
+    .profile-img{
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+    }
+    
+    .btn-dropdown{
+        border: none;
+    }
+    .btn-dropdown:hover{
+        border: none;
+    }
+    
+    @media screen and (max-width: 1100px) {
+        .navbar {
+          padding: 0 0px;
+        }
+        .nav-item {
+          margin: 0 0px;
+      }
+      }
+/* New or Modified CSS */
+.topics-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px; /* Space between badges */
+    justify-content: center; /* Centers badges if they don't take full width */
+    margin: 20px 0; /* Adds a margin above and below for breathing space */
+}
+
+.topic-badge {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 25px; /* Rounded ends */
+    background-color: rgb(244, 242, 242); /* Primary Soft Blue */
+    color: #333333; /* Nearly Black text for contrast */
+    cursor: pointer; /* Indicates badge is clickable */
+    transition: transform 0.2s, background-color 0.2s; /* Smooth hover transition */
+    text-decoration: none; /* Removes underline if badges are links */
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Gap between the label and the count */
+}
+
+.topic-badge:hover {
+    background-color: #FFD2A5; /* Accent Soft Coral on hover */
+    transform: translateY(-5px); /* Slight upward lift on hover */
+}
+
+.badge-count {
+    background-color: #98DDCA; /* Secondary Pastel Green */
+    padding: 5px 10px;
+    border-radius: 15px; /* Fully rounded ends */
+    font-size: 0.9rem;
+    font-weight: 500; /* Making count slightly bold */
+    color: #333333; /* Dark text color for the count for better contrast */
+}
+
+.topic-heading {
+    text-align: center;
+    color: #555555; /* Subdued dark color for the heading */
+    margin-bottom: 15px; 
+}
+@media screen and (max-width: 768px) {
+    .topic-badge {
+        font-size: 0.9rem; /* Slightly smaller font for better fit */
+        padding: 8px 18px;
+    }
+}
+.topics-container {
+    max-width: 800px; /* Or whatever maximum width you desire */
+    margin: 20px auto; /* Centers the container */
+}
+
+
+

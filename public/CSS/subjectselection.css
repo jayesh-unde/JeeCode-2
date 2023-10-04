@@ -1,0 +1,59 @@
+/* Resetting some default styles */
+body, h2 {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f6f8fb; /* Light blueish background for the entire body */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+}
+
+.card {
+    width: 250px;
+    height: 150px;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    cursor: pointer; /* Indicates interactivity */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth animation for hover effect */
+}
+
+.card:nth-child(1) {  /* Physics Card */
+    background: linear-gradient(to bottom right, #FF9A8A, #FF6A88); /* Red gradient */
+}
+
+.card:nth-child(2) {  /* Chemistry Card */
+    background: linear-gradient(to bottom right, #9D50BB, #6E48AA); /* Purple gradient */
+}
+
+.card:nth-child(3) {  /* Maths Card */
+    background: linear-gradient(to bottom right, #4776E6, #8E54E9); /* Blue gradient */
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Slightly elevate the card on hover */
+    box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.15); /* Increase shadow depth on hover */
+}
+
+h2 {
+    color: #ffffff; /* Changing text color to white for better readability on colorful backgrounds */
+    font-size: 24px;
+    font-weight: 600; /* Semi-bold font weight */
+}
+
+/* Responsive design: If the screen is smaller, the cards will stack */
+@media screen and (max-width: 768px) {
+    body {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}

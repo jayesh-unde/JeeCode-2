@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show in Detail</title>
+    <link rel="stylesheet" href="/CSS/post.css"> 
+</head>
+<body>
+    <div class="container">
+        <h1>Post Detail</h1>
+        <div class="post-detail">
+            <h3>Post ID: <%= post.postid %></h3>
+            <h3>@<%= post.username %></h3>
+            <p><%= post.content %></p>
+            <% if (image && image !== '') { %>
+                <img src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" alt="Post Image">
+            <% } %>
+        </div>
+        <div class="replies">
+            <h2>Replies</h2>
+            <a href="/posts/<%= post.postid %>/<%= questionId %>/reply" class="reply-btn">Reply to this Post</a>
+            
+            <% if(replies.length > 0) { %>
+                <% replies.forEach(reply => { %>
+                    <div class="reply">
+                        <h3>@<%= reply.username %></h3>
+                        <p><%= reply.content %></p>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p class="no-replies">No replies available for this post.</p>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

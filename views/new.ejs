@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Post</title>
+    <link rel="stylesheet" href="/CSS/post.css"> 
+</head>
+<body>
+    <div class="container">
+        <h3>Create New Post, <%= username %></h3>
+        <form action="/post/<%= questionId %>" method="post" class="post-form" enctype="multipart/form-data">
+            <input type="text" class="user" name="username" value="<%= username %>" readonly>
+            <textarea name="content" cols="30" rows="10" placeholder="Input your content here..." class="text"></textarea>
+            <input type="file" name="image" accept="image/*">
+            <button>Submit</button>
+        </form>
+    </div>
+</body>
+</html>

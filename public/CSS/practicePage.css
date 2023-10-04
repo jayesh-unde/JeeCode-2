@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+}
+
+body {
+    background-color: #edf0f5;
+    color: #333;
+    font-size: 18px;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.container {
+    position: relative; /* Add a relative position to allow absolute positioning of children */
+    width: 100%;
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 40px;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #eaeaea;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+}
+
+.difficulty {
+    font-weight: 700;
+    color: #2ecc71; 
+    letter-spacing: 1px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    align-self: flex-end; /* Aligns to the bottom of the container */
+}
+
+.timer {
+    background-color: #e74c3c;
+    padding: 10px 20px;
+    border-radius: 25px; 
+    color: #fff;
+    font-size: 18px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.text {
+    font-size: 22px;
+    margin-bottom: 40px;
+    line-height: 1.9;
+    color: #555;
+}
+
+.options label {
+    display: block;
+    margin-bottom: 25px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+}
+
+.options label:hover {
+    background-color: #e6e6e6;
+}
+
+input[type="radio"] {
+    margin-right: 20px;
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;  /* Reduced padding for smaller buttons */
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;     /* Reduced font size */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 30px;
+    
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.1);
+}
+
+a {
+    display: inline-block;
+    position: absolute;  /* Positioning it absolute */
+    right: 20px;         /* Aligning to the right bottom corner */
+    bottom: 40px;
+    padding: 10px 20px;  /* Reduced padding for smaller buttons */
+    background-color: #d1a55e;
+    border-radius: 30px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;     /* Reduced font size */
+    transition: background-color 0.3s;
+}
+
+a:hover {
+    background-color: #e67e22;
+}
+
+.result {
+    margin-top: 40px;
+}
+
+.result-message {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.options label.correct {
+    background-color: #2ecc71;
+    border-color: #27ae60;
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.options label.wrong {
+    background-color: #e74c3c;
+    border-color: #e4412d;
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.options label span {
+    font-size: 22px;
+}
+
+.options label span.correct-answer,
+.options label span.wrong-answer {
+    display: block;
+    font-size: 18px;
+    margin-top: 20px;
+    opacity: 0.9;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .timer, .difficulty {
+        margin-top: 20px;
+    }
+
+    a {
+        position: static;
+        display: block;
+        margin-top: 20px;
+    }
+}

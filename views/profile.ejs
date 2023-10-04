@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>username</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- <link rel="stylesheet" href="/CSS/homeAfter.css"> -->
+    <link rel="stylesheet" href="/CSS/profile.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <!-- jee logo  -->
+        <a class="navbar-brand" href="#"><img src="/images/jee background.png" alt="logo.png" width="150px"
+            height="50px"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:3000">Explore</a>
+            </li>
+            <% if(role=='student' ){ %>
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/subjectSelection">Problems</a>
+              </li>
+            <% } %>
+            <% if(role=='teacher' ){ %>
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:3000/uploadQuestion">Upload Question</a>
+              </li>
+            <% } %>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contest</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+          </ul>
+
+
+          <!-- profile dropdown  -->
+          <div class="btn-group" role="group">
+            <button id="Drop1" type="button" class="btn btn-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="/images/profile photo1.png" alt="profile.png" class="profile-img">
+              <%= username  %>
+            </button>
+            <ul class="dropdown-menu " aria-labelledby="Drop1">
+              <li><a class="dropdown-item" href="http://localhost:3000/user/<%= role %>/<%=username%>">Profile</a></li>
+              <li><a class="dropdown-item" href="http://localhost:3000">Log-out</a></li>
+            </ul>
+          </div>
+
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item btn-premium" style="margin-left: 0;">
+              <a class="nav-link" href="#">Premium</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- <div class="profileImage"></div> -->
+    <!-- <div id="chartContainer">
+        <canvas id="myChartline2"></canvas>
+    </div>
+    <script>
+    const labels2 = ['Label 0','Label 1', 'Label 2', 'Label 3','label 4','Label 0','Label 1', 'Label 2', 'Label 3','label 4'];
+    const data2 = [0,10, 20, 10,40,23,10,26 , 36,10,40];
+
+    // Get the canvas element
+    const ctx2 = document.getElementById('myChartline2').getContext('2d');
+
+    // Create the chart
+    const plugin2 = {
+        id: 'customCanvasBackgroundColor',
+        beforeDraw: (chart, args, options) => {
+                const {ctx2} = chart;
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = options.color || 'white';
+                ctx.fillRect(0, 0, chart.width, chart.height);
+                ctx.restore();
+            }
+        };
+    const chart2 = new Chart(ctx2, {
+    type: 'bar', // Change chart type as needed (e.g., 'line', 'pie')
+    data: {
+    labels: labels2,
+    datasets: [{
+        label: 'My Chart',
+        data: data2,
+        color: 'yellow',
+        backgroundColor: ['#a2bfe67e','orange','#a2bae67e','#ffbe429f','#aa33fd33','#a2efe67e','#00ff0099','#a2cfe67e','#ed11e67e'],
+        borderColor: '#006dfc',
+        tension:0.4, // Customize colors
+        fill : true,
+        hoverOffset: 4,
+    }],
+    },    
+    plugins:[plugin2],
+    options:{
+        Plugins:{
+            customCanvasBackgroundColor: {
+                color: 'lightGreen',
+            }
+        }
+    },
+
+    }); -->
+
+
+    </script>
+
+
+
+                        <!-- calculation for all the questions -->
+                        <% let easy = 0,medium=0,hard=0 %>
+                        <% let physicsEasy = 0,chemistryEasy=0,mathsEasy=0 %>
+                        <% let physicsMedium = 0,chemistryMedium=0,mathsMedium=0 %>
+                        <% let physicsHard= 0,chemistryHard=0,mathsHard=0 %>
+                        <% for(object in rows) {%>
+                        
+                        <% if(rows[object].difficulty==='easy'){ easy +=1; %>
+                            <% if(rows[object].subject==='physics') physicsEasy += 1  %>
+                            <% if(rows[object].subject==='chemistry') chemistryEasy += 1  %>
+                            <% if(rows[object].subject==='maths') mathsEasy += 1  }%>
+    
+                        <% if(rows[object].difficulty==='medium'){ medium +=1; %>
+                            <% if(rows[object].subject==='physics') physicsMedium += 1  %>
+                            <% if(rows[object].subject==='chemistry') chemistryMedium += 1  %>
+                            <% if(rows[object].subject==='maths') mathsMedium += 1  }%>
+    
+                        <% if(rows[object].difficulty==='hard'){ hard +=1; %>
+                            <% if(rows[object].subject==='physics') physicsHard += 1  %>
+                            <% if(rows[object].subject==='chemistry') chemistryHard += 1  %>
+                            <% if(rows[object].subject==='maths') mathsHard += 1  }}%>
+                        
+    
+                        <!-- calculation for the user  -->
+                        
+                        <% let easySolved = 0,mediumSolved=0,hardSolved=0 %>
+                        <% let physicsEasySolved = 0,chemistryEasySolved=0,mathsEasySolved=0 %>
+                        <% let physicsMediumSolved = 0,chemistryMediumSolved=0,mathsMediumSolved=0 %>
+                        <% let physicsHardSolved= 0,chemistryHardSolved=0,mathsHardSolved=0 %>
+                        <% let physicsTopics= new Set(),chemistryTopics=new Set(),mathsTopics= new Set(); %>
+                        
+
+                        <% for(obj in solvedResult) {%>
+                        <% if(solvedResult[obj].doneStatus == false) continue; %>
+
+                        <% if(rows[solvedResult[obj].questionid].difficulty ==='easy'){ easySolved +=1; %>
+                            <% if(rows[solvedResult[obj].questionid].subject ==='physics'){physicsEasySolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid].topic) }  %>
+                            <% if(rows[solvedResult[obj].questionid].subject ==='chemistry'){chemistryEasySolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid].topic)}  %>
+                            <% if(rows[solvedResult[obj].questionid].subject ==='maths'){ mathsEasySolved +=1;mathsTopics.add(rows[solvedResult[obj].questionid].topic)} }%>
+                            
+    
+                        <% if(rows[solvedResult[obj].questionid].difficulty==='medium'){ mediumSolved +=1; %>
+                            <% if(rows[solvedResult[obj].questionid].subject ==='physics'){ physicsMediumSolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid].topic)} %>
+                            <% if(rows[solvedResult[obj].questionid].subject ==='chemistry'){ chemistryMediumSolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid].topic)} %>
+                            <% if(rows[solvedResult[obj].questionid].subject ==='maths'){ mathsMediumSolved +=1; mathsTopics.add(rows[solvedResult[obj].questionid].topic)}}%>
+    
+    
+                        <% if(rows[solvedResult[obj].questionid].difficulty==='hard'){ hardSolved +=1; %>
+                            <% if(rows[solvedResult[obj].questionid].subject ==='physics'){ physicsHardSolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid].topic)} %>
+                            <% if(rows[solvedResult[obj].questionid].subject ==='chemistry'){ chemistryHardSolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid].topic)} %>
+                            <% if(rows[solvedResult[obj].questionid].subject ==='maths'){ mathsHardSolved +=1;mathsTopics.add(rows[solvedResult[obj].questionid].topic)} }}%>
+    
+    
+                        <% let totalSolved = easySolved+mediumSolved+hardSolved %>
+                        <% let total = easy+medium+hard %>
+                        <% let Avg = (totalSolved/total)*100 %>
+                        <% let easyAvg = (easySolved/easy)*100 %>
+                        <% let mediumAvg = (mediumSolved/medium)*100 %>
+                        <% let hardAvg = (hardSolved/hard)*100 %>
+
+                        <% physicsTopics = Array.from(physicsTopics); %>
+                        <% mathsTopics = Array.from(mathsTopics); %>
+                        <% chemistryTopics = Array.from(chemistryTopics); %>
+
+
+
+
+                        
+    <div class="container">
+        <div class="main-body">
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="main-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">
+                            <%= username %>
+                        </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <%= role %> Profile
+                    </li>
+                </ol>
+            </nav>
+            <!-- /Breadcrumb -->
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
+                                    class="rounded-circle" width="150">
+                                <div class="mt-3">
+                                    <h4>
+                                        <%= username %>
+                                    </h4>
+                                    <p class="text-secondary mb-1">Jee student</p>
+                                    <p class="text-muted font-size-sm">School</p>
+                                    <!-- <button class="btn btn-primary">Follow</button> -->
+                                    <!-- <button class="btn btn-outline-primary">Message</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="card mt-3">
+                        <a class="btn btn-info " target="__blank"
+                            href="#">Edit profile</a>
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="card mt-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Name</h6>
+                                <span class="text-secondary"><%= user.fullname %></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Email</h6>
+                                <span class="text-secondary"><%= user.email %></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Country</h6>
+                                <span class="text-secondary">not provided</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Mobile</h6>
+                                <span class="text-secondary">not provided</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Address</h6>
+                                <span class="text-secondary">not provided</span>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="card mt-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-globe mr-2 icon-inline">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        <path
+                                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                        </path>
+                                    </svg>Website</h6>
+                                <span class="text-secondary">not provided</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-github mr-2 icon-inline">
+                                        <path
+                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                        </path>
+                                    </svg>Github</h6>
+                                <span class="text-secondary">not provided</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-twitter mr-2 icon-inline text-info">
+                                        <path
+                                            d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                        </path>
+                                    </svg>Twitter</h6>
+                                <span class="text-secondary">not provided</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-instagram mr-2 icon-inline text-danger">
+                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                    </svg>Instagram</h6>
+                                <span class="text-secondary">not provided</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-facebook mr-2 icon-inline text-primary">
+                                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
+                                        </path>
+                                    </svg>Facebook</h6>
+                                <span class="text-secondary">not provided</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card mt-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Physics</h6>
+                             
+                                <% for(topic in physicsTopics){ %>
+                                    <span class="text-secondary topic"><%= physicsTopics[topic] %></span>
+                                    <% } %>
+                               
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Chemistry</h6>
+                                <% for(topic in chemistryTopics){ %>
+                                    <span class="text-secondary topic"><%= chemistryTopics[topic] %></span>
+                                    <% } %>
+                                
+
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Mathematics</h6>
+                                <% for(topic in mathsTopics){ %>
+                                    <span class="text-secondary topic"><%= mathsTopics[topic] %></span>
+                                    <% } %>
+                                
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-md-8">
+                    <!-- start -->
+                    <div class="card mb-3">
+
+                        <div class="card-body">
+                            <div id="chartContainer">
+                                <canvas id="myChartline"></canvas>
+                            </div>
+                            <div id="value-progresschart" style="display: none;"><%=  mediumSolved + hardSolved + easySolved  %></div>
+                            <script>
+                                let root = document.getElementById('value-progresschart');
+                                let sept = parseInt(root.innerText);
+                                const labels = ['February','March', 'April', 'May' , 'June', 'July','August','September'];
+                                const data = [2,0,4,5,6,17,14,23];
+
+                                // Get the canvas element
+                                const ctx = document.getElementById('myChartline').getContext('2d');
+
+                                // Create the chart
+                                const plugin = {
+                                    id: 'customCanvasBackgroundColor',
+                                    beforeDraw: (chart, args, options) => {
+                                        const { ctx } = chart;
+                                        ctx.save();
+                                        ctx.globalCompositeOperation = 'destination-over';
+                                        ctx.fillStyle = options.color || 'white';
+                                        ctx.fillRect(0, 0, chart.width, chart.height);
+                                        ctx.restore();
+                                    }
+                                };
+                                const chart = new Chart(ctx, {
+                                    type: 'line', // Change chart type as needed (e.g., 'line', 'pie')
+                                    data: {
+                                        labels: labels,
+                                        datasets: [{
+                                            label: 'My progress',
+                                            data: data,
+                                            color: 'yellow',
+                                            backgroundColor: '#a2bfe67e',
+                                            borderColor: '#006dfc',
+                                            tension: 0.4, // Customize colors
+                                            fill: true,
+                                            hoverOffset: 4,
+                                        }],
+                                    },
+                                    options: {
+                                        Plugins: {
+                                            customCanvasBackgroundColor: {
+                                                color: 'lightGreen',
+                                            }
+                                        },
+                                        scales: {
+                                            x: {
+                                                grid: {
+                                                    display: false // Hide the vertical grid lines
+                                                }
+                                            },
+                                            y: {
+                                                grid: {
+                                                    display: false
+                                                }
+                                            }
+                                            // Other scale configurations
+                                        },
+                                    },
+                                    plugins: [plugin],
+                                });
+
+
+                            </script>
+                        </div>
+                    </div>
+                    <!-- end  -->
+
+                    <div class="row gutters-sm">
+                        <div class="col-sm-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="d-flex align-items-center mb-3">Total Questions</h6>
+                                    
+                                    <small>Question Solved &nbsp; <%= totalSolved %>/<%= total %>  </small>
+                    
+                                    <div class="progress mb-3" style="height: 12px">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: <%= Avg %>%"
+                                            aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    
+                                    
+
+                                    <small>Easy &nbsp;<%= easySolved %>/<%= easy %></small>
+                                    <div class="progress mb-3" style="height: 12px">
+                                        
+                                        <div class="progress-bar bg-success" role="progressbar" style="width:<%= easyAvg %>%"
+                                            aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small>Medium &nbsp;<%= mediumSolved %>/<%= medium %> </small>
+
+                                    <div class="progress mb-3" style="height: 12px">
+                                        <%  %>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width:<%= mediumAvg %>%"
+                                            aria-valuenow="89" aria-valuemin="0" aria-valuemax="100" id="medium"></div>
+                                    </div>
+                                    <small>Hard &nbsp; <%= hardSolved %>/<%= hard %></small>
+                                    <div class="progress mb-3" style="height: 12px">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width:<%= hardAvg %>%"
+                                            aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="d-flex align-items-center mb-3">Solved Questions <i
+                                            class="material-icons text-info mr-2">&nbsp;vs&nbsp;</i> Total Questions</h6>
+
+                                    <small id="value1" style="display: none;"><%= totalSolved %>/<%= total %></small>
+                                    <small>
+                                        Total Questions : <%= total %>
+                                        <br>
+                                        Solved Questions: <%= totalSolved %>
+                                    </small>
+                                    
+                                    
+                                    <div id="chartContainer2">
+                                        <canvas id="myChartline2"></canvas>
+                                    </div>
+                                    <script>
+                                        const labels2 = ['','','','','','','','','',''];
+                                        let pointer = document.getElementById('value1');
+                                        let val = pointer.innerText.split('/');
+                                        let ts = parseInt(val[0]);
+                                        let total = parseInt(val[1]);
+                                        console.log(val,total);
+                                        let data2 = [ts,ts-1,ts+1,ts,ts+1,ts-1,ts,ts-1,ts,ts+1];
+                                        
+                                        
+                                        // Get the canvas element
+                                        const ctx2 = document.getElementById('myChartline2').getContext('2d');
+                                        
+                                        // Create the chart
+                                        const plugin2 = {
+                                            id: 'customCanvasBackgroundColor',
+                                            beforeDraw: (chart, args, options) => {
+                                                const { ctx2 } = chart;
+                                                ctx.save();
+                                                ctx.globalCompositeOperation = 'destination-over';
+                                                ctx.fillStyle = options.color || 'white';
+                                                ctx.fillRect(0, 0, chart.width, chart.height);
+                                                ctx.restore();
+                                            }
+                                        };
+                                        const chart2 = new Chart(ctx2, {
+                                            type: 'line', // Change chart type as needed (e.g., 'line', 'pie')
+                                            data: {
+                                                labels: labels2,
+                                                datasets: [{
+                                                    label: 'total vs solved',
+                                                    data: data2,
+                                                    backgroundColor: '#a2bfe67e',
+                                                    borderColor: '#006dfc0f',
+                                                    tension: 0.4, // Customize colors
+                                                    pointRadius: 0, // Set point radius to 0 to remove data points
+                                                    pointHoverRadius: 0, 
+                                                    fill: true,
+                                                    hoverOffset: 4,
+                                                }],
+                                            },
+                                            plugins: [plugin2],
+                                            options: {
+                                                Plugins: {
+                                                    customCanvasBackgroundColor: {
+                                                        color: 'lightGreen',
+                                                    }
+                                                },
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true, // This will start the y-axis at 0
+                                                        suggestedMin: 0, // Set the minimum y-axis value
+                                                        suggestedMax: total, // Set the maximum y-axis value
+                                                    }
+                                                }
+                                            },
+
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                        <% totalPhysics = physicsEasy + physicsMedium + physicsHard %>
+                        <% totalChemisty =chemistryEasy + chemistryHard + chemistryMedium %>
+                        <% totalMaths = mathsEasy +mathsHard + mathsMedium %>
+                        <% maxVal = Math.max(totalChemisty,Math.max(totalMaths,totalPhysics)) %>
+                        <% console.log(maxVal)%>
+
+
+                        <% totalPhysicsSolved = physicsEasySolved + physicsMediumSolved + physicsHardSolved %>
+                        <% totalChemistySolved =chemistryEasySolved + chemistryHardSolved + chemistryMediumSolved %>
+                        <% totalMathsSolved = mathsEasySolved +mathsHardSolved + mathsMediumSolved %>
+                        <% maxValSolved = Math.max(totalChemistySolved,Math.max(totalMathsSolved,totalPhysicsSolved)) %>
+                        <% console.log(maxValSolved)%>
+                    
+                        <div class="col-sm-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="d-flex align-items-center mb-3">Subject wise Analysis
+                                    </h6>
+                                    <span class="text-secondary">Total Question in</span>
+                                    <br>
+                                    <small>Physics: <%= totalPhysics %></small>
+                                    <small>Chemistry: <%= totalChemisty %></small>
+                                    <small>Mathematics: <%= totalMaths %></small>
+                                    <div id="values2" style="display: none;"><%= totalPhysics %> <%= totalChemisty %> <%= totalMaths %> <%= maxVal %> <%= totalPhysicsSolved %> <%= totalChemistySolved %> <%= totalMathsSolved %></div>
+                                    <div id="chartContainer2">
+                                        <canvas id="myChartline3" height="250px"></canvas>
+                                    </div>
+                                    <script>
+                                        let vals2pointer = document.getElementById('values2');
+                                        let vals2 = vals2pointer.innerText;
+                                        let vals = vals2.split(' ');
+                                        console.log(vals);
+                                        
+                                        const labels3 = ['Physics', 'Chemistry', 'Maths'];
+                                        const data3 = [parseInt(vals[4]), parseInt(vals[5]), parseInt(vals[6])];
+
+                                        // Get the canvas element
+                                        const ctx3 = document.getElementById('myChartline3').getContext('2d');
+
+                                        // Create the chart
+                                        const plugin3 = {
+                                            id: 'customCanvasBackgroundColor',
+                                            beforeDraw: (chart, args, options) => {
+                                                const { ctx3 } = chart;
+                                                ctx.save();
+                                                ctx.globalCompositeOperation = 'destination-over';
+                                                ctx.fillStyle = options.color || 'white';
+                                                ctx.fillRect(0, 0, chart.width, chart.height);
+                                                ctx.restore();
+                                            }
+                                        };
+                                        const chart3 = new Chart(ctx3, {
+                                            type: 'bar', // Change chart type as needed (e.g., 'line', 'pie')
+                                            data: {
+                                                labels: labels3,
+                                                datasets: [{
+                                                    label: 'total vs done',
+                                                    data: data3,
+                                                    color: 'yellow',
+                                                    backgroundColor: ['#9400d3', '#eee8aa', '#125dd6'],
+                                                    borderColor: 'black',
+                                                    tension: 0.4, // Customize colors
+                                                    fill: true,
+                                                    hoverOffset: 4,
+                                                }],
+                                            },
+                                            plugins: [plugin3],
+                                            options: {
+                                                Plugins: {
+                                                    customCanvasBackgroundColor: {
+                                                        color: 'lightGreen',
+                                                    }
+                                                },
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true, // This will start the y-axis at 0
+                                                        suggestedMin: 0, // Set the minimum y-axis value
+                                                        suggestedMax: parseInt(vals[3]) , // Set the maximum y-axis value
+                                                    }
+                                                }
+                                            },
+
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="d-flex align-items-center mb-3"> SubjectWise Analysis </h6>
+                                    <span class="text-secondary">Physics</span>
+                                    <br>
+                                    <small>Total Questions <%= totalPhysicsSolved %>/<%= totalPhysics %></small>
+                                    <div id="values3" style="display: none;"><%= totalPhysics %> <%= totalPhysicsSolved %> <%= physicsEasy %> <%= physicsEasySolved %> <%=  physicsMedium %> <%= physicsMediumSolved %> <%= physicsHard %> <%= physicsHardSolved %></div>
+                                    <div id="chartContainer2">
+                                        <canvas id="myChartline4" height="250px"></canvas>
+                                    </div>
+                                    <script>
+
+                                        let vals3pointer = document.getElementById('values3');
+                                        let vals3 = vals3pointer.innerText;
+                                        vals = vals3.split(' ');
+                                        console.log(vals);
+
+                                        const labels4 = ['Easy', 'Medium', 'Hard'];
+                                        const data4 = [parseInt(vals[3])/parseInt(vals[2]),parseInt(vals[5])/parseInt(vals[4]),parseInt(vals[7])/parseInt(vals[6])];
+                                        console.log(data4);
+                                        // Get the canvas element
+                                        const ctx4 = document.getElementById('myChartline4').getContext('2d');
+
+                                        // Create the chart
+                                        const plugin4 = {
+                                            id: 'customCanvasBackgroundColor',
+                                            beforeDraw: (chart, args, options) => {
+                                                const { ctx4 } = chart;
+                                                ctx.save();
+                                                ctx.globalCompositeOperation = 'destination-over';
+                                                ctx.fillStyle = options.color || 'white';
+                                                ctx.fillRect(0, 0, chart.width, chart.height);
+                                                ctx.restore();
+                                            }
+                                        };
+                                        const chart4 = new Chart(ctx4, {
+                                            type: 'bar', // Change chart type as needed (e.g., 'line', 'pie')
+                                            data: {
+                                                labels: labels4,
+                                                datasets: [{
+                                                    label: 'Physics',
+                                                    data: data4,
+                                                    color: 'yellow',
+                                                    backgroundColor: ['#00ff0099', '#ffc400a9', '#ff000099'],
+                                                    borderColor: 'black',
+                                                    tension: 0.4, // Customize colors
+                                                    fill: true,
+                                                    hoverOffset: 4,
+                                                }],
+                                            },
+                                            plugins: [plugin4],
+                                            options: {
+                                                Plugins: {
+                                                    customCanvasBackgroundColor: {
+                                                        color: 'lightGreen',
+                                                    }
+                                                },
+                                                scales:{
+                                                    y:{
+                                                        suggestedMax : 1
+                                                    }
+                                                }
+                                            },
+
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
