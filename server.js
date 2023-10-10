@@ -55,9 +55,73 @@ app.listen(port,()=>{
 app.get("/apple",(req,res)=>{
     res.send("this is apple reqest");
 });
+
 app.get("/",(req,res)=>{
     res.render("homeBefore.ejs");
 });
+
+// student register request getting  ----> start
+
+app.get('/studentRegister',(req,res)=>{
+    res.render('studentRegister.ejs');
+});
+app.get('/edit/:role/:username',(req,res)=>{
+    let {role,username} = req.params;
+    let q = 'select * from users where username = $1';
+    pool.query(q,[username],(err,result)=>{
+        if(err) throw err;
+        let details = result.rows[0];
+        console.log(details);
+        res.render('profile_edit.ejs',{details});
+    });
+    
+});
+
+app.post("/edit_profile",(req,res)=>{
+   let { username,role,school,age,country,address,exam,mobile,website,twitter,github,instagram, linkedin } = req.body;
+   let q = `UPDATE users SET role = '${role}'`;
+   if(school){
+    q += `,school='${school}'`;
+   }
+   if(age){
+    q += `,age=${age}`;
+   }
+   if(country){
+    q += `,country= '${country}'`;
+   }
+   if(address){
+    q += `,address='${address}'`;
+   }
+   if(exam){
+    q += `,exam='${exam}'`;
+   }
+   if(mobile){
+    q += `,mobile=${mobile}`;
+   }
+   if(website){
+    q += `,website='${website}'`;
+   }
+   if(twitter){
+    q += `,twitter='${twitter}'`;
+   }
+   if(instagram){
+    q += `,instagram='${instagram}'`;
+   }
+   if(github){
+    q += `,github='${github}'`;
+   }
+   if(linkedin){
+    q += `,linkedin='${linkedin}'`;
+   }
+   
+   pool.query(q,(err,result)=>{
+    if (err) throw err;
+    res.redirect(`/user/${role}/${username}`);
+   });
+
+});
+
+
 
 // student register request getting  ----> start
 
@@ -71,8 +135,14 @@ app.post('/StudentRegistered',(req,res)=>{
         if (error) {
             throw error;
         }
-        let wrong = false;
-        res.status(200).render('loginStudent.ejs',{wrong});
+        pool.query(`INSERT INTO users(username) values('${username}')`,(error, results2)=>{
+            if (error) {
+                throw error;
+            }
+            let wrong = false;
+            res.status(200).render('loginStudent.ejs',{wrong});
+        })
+        
     });
 });
 
@@ -92,8 +162,14 @@ app.post('/TeacherRegistered',(req,res)=>{
         if (error) {
             throw error;
         }
-        let wrong = false;
-        res.status(200).render('loginTeacher.ejs',{wrong});
+        pool.query(`INSERT INTO users(username) values('${username}')`,(error, results2)=>{
+            if (error) {
+                throw error;
+            }
+            let wrong = false;
+            res.status(200).render('loginTeacher.ejs',{wrong});
+        })
+        
     });
 });
 
@@ -107,22 +183,40 @@ app.get('/studentLogin',(req,res)=>{
     res.render('loginStudent.ejs',{wrong});
 });
 
-app.post('/StudentLogin',(req,res)=>{
-    const {username,password} = req.body;
-    user = username;    
-    pool.query('SELECT fullname FROM StudentRegistrations WHERE username = $1 AND password = $2', [username, password], function (err, result, fields) {
-        if (err) throw err;
-        if(result.rows.length === 1){
-            let name = result.rows[0].fullname;
-            console.log(name);
-            let role = 'student';
-            res.render('homeAfter.ejs',{username,role});
-        }else{
-            let wrong = true;
-            res.render('loginStudent.ejs',{wrong});
+app.post('/StudentLogin', async (req, res) => {
+    const { username, password } = req.body;
+    console.log(username);
+    user = username;
+
+    try {
+        const userResult = await pool.query('SELECT fullname FROM StudentRegistrations WHERE username = $1 AND password = $2', [username, password]);
+
+        if (userResult.rows.length === 1) {
+            const name = userResult.rows[0].fullname;
+            console.log(username);
+            
+            // Fetch topics with their counts
+            const topicsWithCount = await pool.query(`
+                SELECT topic, COUNT(*) as question_count 
+                FROM questions 
+                GROUP BY topic;
+            `);
+
+            const role = 'student';
+            res.render('homeAfter.ejs', { username, role, topics: topicsWithCount.rows });
+        } else {
+            const wrong = true;
+            res.render('loginStudent.ejs', { wrong });
         }
-    });
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
 });
+
+
+
 
 
 // Teacher login 
@@ -400,4 +494,75 @@ app.get('/questions/:subject', async (req, res) => {
         // console.log("query get to ho rahi hai try chalna start hua but error aa gai");
         res.status(500).send('Error fetching questions.');
     }
+});
+
+app.post("/insertSolvedData", async (req, res) => {
+    try {
+        const { username, questionId, timespent, date, doneStatus, subject } = req.body;
+        console.log(username,questionId,timespent,date,doneStatus,subject);
+        await pool.query(`INSERT INTO solved (username, questionId, timespent, date, donestatus) VALUES ($1, $2, $3, $4, $5)`, [username, questionId, timespent, date, doneStatus]);
+        res.redirect(`/questions/${subject}`);
+    } catch (err) {
+        console.error("Failed to insert data", err);
+        res.status(500).send('Failed to insert data');
+    }
+});
+app.get('/contactus',(req,res)=>{
+    res.render('contactus.ejs');
+});
+
+// User Profile
+app.get("/user/:role/:username",(req,res)=>{
+    let {role,username} = req.params;
+    console.log(username);
+    console.log(role);
+    pool.query('SELECT * FROM questions', function (err, result, fields) {
+        if (err) throw err;
+        rows = result.rows;
+        if(role === 'student'){
+            pool.query('SELECT * FROM solved WHERE username = $1', [username], function (err, result2, fields) {
+                if (err) throw err;
+                solvedResult = result2.rows;
+                pool.query('select * from studentregistrations where username = $1',[username],function(err2,result3, fields){
+                    if (err2) throw err2;
+                    let user = result3.rows[0];
+                    pool.query('select * from users where username = $1',[username],(err3,result4)=>{
+                        if(err3) throw err3;
+                        let details = result4.rows[0];
+                        
+                        res.render('profile.ejs',{role,username,rows,solvedResult,user,details});
+                    });
+                    
+
+                });
+                
+            });
+        }else if(role === 'teacher'){
+            pool.query('select * from teacherregistrations where username = $1',[username],(err11,result11)=>{
+                if(err11){
+                    throw err11;
+                }
+                let user = result11.rows[0];
+                pool.query('select * from users where username = $1',[username],(err12,result12)=>{
+                    if(err12){
+                        throw err12;
+                    }
+                    let details = result12.rows[0];
+                    pool.query('SELECT * FROM uploaded WHERE author = $1 ORDER BY dateUploaded ASC', [username], (err13, result13) => {
+                        if (err13) {
+                            throw err13;
+                        }
+                        // Rest of your code
+                        let uploads = result13.rows;
+                        // console.log(uploads);
+                        res.render('teacher_profile.ejs',{role,username,user,details,rows,uploads});
+                    });
+                });
+            });
+           
+        }
+        
+        // res.render('profile.ejs',{role,username,rows});
+    });
+
 });
