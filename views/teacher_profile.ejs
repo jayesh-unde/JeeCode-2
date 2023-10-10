@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>username</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- <link rel="stylesheet" href="/CSS/homeAfter.css"> -->
+    <link rel="stylesheet" href="/CSS/profile.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <!-- jee logo  -->
+            <a class="navbar-brand" href="#"><img src="/images/jee background.png" alt="logo.png" width="150px"
+                    height="50px"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:3000">Explore</a>
+                    </li>
+                    <% if(role=='student' ){ %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="subjectDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Problems
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="subjectDropdown">
+                                <a class="dropdown-item" href="/questions/physics">Physics</a>
+                                <a class="dropdown-item" href="/questions/chemistry">Chemistry</a>
+                                <a class="dropdown-item" href="/questions/maths">Maths</a>
+                            </div>
+                        </li>
+                        <% } %>
+                            <% if(role=='teacher' ){ %>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/uploadQuestion/<%= username %>">Upload Question</a>
+                                </li>
+                                <% } %>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Contest</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">About</a>
+                                    </li>
+                </ul>
+
+
+                <!-- profile dropdown  -->
+                <div class="btn-group" role="group">
+                    <button id="Drop1" type="button" class="btn btn-dropdown" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="/images/profile photo.png" alt="profile.png" class="profile-img">
+                        <%= username %>
+                    </button>
+                    <ul class="dropdown-menu " aria-labelledby="Drop1">
+                        <li><a class="dropdown-item"
+                                href="http://localhost:3000/user/<%= role %>/<%=username%>">Profile</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:3000">Log-out</a></li>
+                    </ul>
+                </div>
+
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item btn-premium" style="margin-left: 0;">
+                        <a class="nav-link" href="#">Premium</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="container">
+        <div class="main-body">
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="main-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">
+                            <%= username %>
+                        </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <%= role %> Profile
+                    </li>
+                </ol>
+            </nav>
+            <!-- /Breadcrumb -->
+            <div class="row gutters-sm">
+                <div class="col-md-4 mb-3">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
+                                    class="rounded-circle" width="150">
+                                <div class="mt-3">
+                                    <h4>
+                                        <%= username %>
+                                    </h4>
+                                    <p class="text-secondary mb-1">
+                                        <%= details.exam %>
+                                            <%= details.role %>
+                                    </p>
+                                    <p class="text-muted font-size-sm">
+                                        <%= details.school %>
+                                    </p>
+                                    <!-- <button class="btn btn-primary">Follow</button> -->
+                                    <!-- <button class="btn btn-outline-primary">Message</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="card mt-3">
+                        <a class="btn btn-info " target="__blank" href="/edit/<%= role %>/<%= username %>">Edit
+                            profile</a>
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="card mt-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Name</h6>
+                                <span class="text-secondary">
+                                    <%= user.fullname %>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Email</h6>
+                                <span class="text-secondary">
+                                    <%= user.email %>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Country</h6>
+                                <span class="text-secondary">
+                                    <% if(details.country===null){ %>
+                                        not provided
+                                        <%}else{ %>
+                                            <%= details.country%>
+                                                <% } %>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Age</h6>
+                                <span class="text-secondary">
+                                    <% if(details.age===null){ %>
+                                        not provided
+                                        <%}else{ %>
+                                            <%= details.age%>
+                                                <% } %>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Mobile</h6>
+                                <span class="text-secondary">
+                                    <% if(details.mobile===null){ %>
+                                        not provided
+                                        <%}else{ %>
+                                            <%= details.mobile %>
+                                                <% } %>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Address</h6>
+                                <span class="text-secondary">
+                                    <% if(details.address===null){ %>
+                                        not provided
+                                        <%}else{ %>
+                                            <%= details.address %>
+                                                <% } %>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="card mt-3">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-globe mr-2 icon-inline">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        <path
+                                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                        </path>
+                                    </svg>Website</h6>
+                                <span class="text-secondary">
+                                    <% if(details.website===null){ %>
+                                        not provided
+                                        <%}else{ %>
+                                            <%= details.website %>
+                                                <% } %>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-github mr-2 icon-inline">
+                                        <path
+                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                        </path>
+                                    </svg>Github</h6>
+                                <span class="text-secondary">
+                                    <% if(details.github===null){ %>
+                                        not provided
+                                        <%}else{ %>
+                                            <%= details.github %>
+                                                <% } %>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-twitter mr-2 icon-inline text-info">
+                                        <path
+                                            d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                        </path>
+                                    </svg>Twitter</h6>
+                                <span class="text-secondary">
+                                    <% if(details.twitter===null){ %>
+                                        not provided
+                                        <%}else{ %>
+                                            <%= details.twitter %>
+                                                <% } %>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-instagram mr-2 icon-inline text-danger">
+                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                    </svg>Instagram</h6>
+                                <span class="text-secondary">
+                                    <% if(details.instagram===null){ %>
+                                        not provided
+                                        <%}else{ %>
+                                            <%= details.instagram %>
+                                                <% } %>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-facebook mr-2 icon-inline text-primary">
+                                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
+                                        </path>
+                                    </svg>linkedin</h6>
+                                <span class="text-secondary">
+                                    <% if(details.linkedin===null){ %>
+                                        not provided
+                                        <%}else{ %>
+                                            <%= details.linkedin %>
+                                                <% } %>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+
+
+                </div>
+                <% let easySolved = 0,mediumSolved=0,hardSolved=0 %>
+                <% let physicsEasySolved = 0,chemistryEasySolved=0,mathsEasySolved=0 %>
+                <% let physicsMediumSolved = 0,chemistryMediumSolved=0,mathsMediumSolved=0 %>
+                <% let physicsHardSolved= 0,chemistryHardSolved=0,mathsHardSolved=0 %>
+                <% let physicsTopics= new Set(),chemistryTopics=new Set(),mathsTopics= new Set(); %>
+                
+
+                <% let January=0,February=0,March=0,April=0,May=0,June=0,July=0,August=0,September=0,October=0; %>
+
+                <% for(obj in uploads) {%>
+                    <% let month=uploads[obj].dateuploaded.toString().split(" ")[1]; %>
+                    <% if(month === 'Jan') January += 1; else if(month === 'Feb') February += 1; else if(month === 'Mar') March += 1; else if(month === 'Apr') April += 1; else if(month === 'May') May += 1; else if(month === 'Jun') June += 1; else if(month === 'Jul') July += 1; else if(month === 'Aug') August += 1; else if(month === 'Sep') September += 1; else if(month === 'Oct') October += 1; %>
+
+        
+                    <% if(rows[solvedResult[obj].questionid-1].difficulty === 'easy'){ easySolved +=1; %>
+                        <% if(rows[solvedResult[obj].questionid-1].subject ==='physics'){physicsEasySolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid-1].topic); physicsQuestions.add(solvedResult[obj].questionid-1);}  %>
+                        <% if(rows[solvedResult[obj].questionid-1].subject ==='chemistry'){chemistryEasySolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid-1].topic); chemistryQuestions.add(solvedResult[obj].questionid-1);}  %>
+                        <% if(rows[solvedResult[obj].questionid-1].subject ==='maths'){ mathsEasySolved +=1;mathsTopics.add(rows[solvedResult[obj].questionid-1].topic); mathsQuestions.add(solvedResult[obj].questionid-1);} }%>
+                        
+        
+        <% if(rows[solvedResult[obj].questionid -1].difficulty==='medium'){ mediumSolved +=1; %>
+            <% if(rows[solvedResult[obj].questionid -1].subject ==='physics'){ physicsMediumSolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid - 1 ].topic); physicsQuestions.add(solvedResult[obj].questionid -1);} %>
+            <% if(rows[solvedResult[obj].questionid -1].subject ==='chemistry'){ chemistryMediumSolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid -1].topic); chemistryQuestions.add(solvedResult[obj].questionid-1);} %>
+            <% if(rows[solvedResult[obj].questionid-1].subject ==='maths'){ mathsMediumSolved +=1; mathsTopics.add(rows[solvedResult[obj].questionid-1].topic); mathsQuestions.add(solvedResult[obj].questionid);}}%>
+
+       
+        <% if(rows[solvedResult[obj].questionid  -1 ].difficulty === 'hard' ){ hardSolved +=1; %>
+            <% if(rows[solvedResult[obj].questionid - 1].subject ==='physics'){ physicsHardSolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid -1 ].topic); physicsQuestions.add(solvedResult[obj].questionid - 1);} %>
+            <% if(rows[solvedResult[obj].questionid -1 ].subject ==='chemistry'){ chemistryHardSolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid -1].topic); chemistryQuestions.add(solvedResult[obj].questionid -1);} %>
+            <% if(rows[solvedResult[obj].questionid-1].subject ==='maths'){ mathsHardSolved +=1;mathsTopics.add(rows[solvedResult[obj].questionid-1].topic); mathsQuestions.add(solvedResult[obj].questionid-1);}  }%>
+
+                <% }%>
+
+
+                <!-- calculation for all the questions -->
+                <% let easy = 0,medium=0,hard=0 %>
+                <% let physicsEasy = 0,chemistryEasy=0,mathsEasy=0 %>
+                <% let physicsMedium = 0,chemistryMedium=0,mathsMedium=0 %>
+                <% let physicsHard= 0,chemistryHard=0,mathsHard=0 %>
+                <% for(object in rows) {%>
+                
+                <% if(rows[object].difficulty==='easy'){ easy +=1; %>
+                    <% if(rows[object].subject==='physics') physicsEasy += 1  %>
+                    <% if(rows[object].subject==='chemistry') chemistryEasy += 1  %>
+                    <% if(rows[object].subject==='maths') mathsEasy += 1  }%>
+
+                <% if(rows[object].difficulty==='medium'){ medium +=1; %>
+                    <% if(rows[object].subject==='physics') physicsMedium += 1  %>
+                    <% if(rows[object].subject==='chemistry') chemistryMedium += 1  %>
+                    <% if(rows[object].subject==='maths') mathsMedium += 1  }%>
+
+                <% if(rows[object].difficulty==='hard'){ hard +=1; %>
+                    <% if(rows[object].subject==='physics') physicsHard += 1  %>
+                    <% if(rows[object].subject==='chemistry') chemistryHard += 1  %>
+                    <% if(rows[object].subject==='maths') mathsHard += 1  }}%>
+
+
+
+                <%  %>
+
+
+
+
+
+                <div class=" col-md-8">
+                            <!-- start -->
+                            <div class="card mb-3">
+
+                                <div class="card-body" style="height: 450px;">
+                                    <div id="chartContainer"
+                                        style="height: 420px; border: 2px solid rgb(208, 203, 203); border-radius: 5px;">
+                                        <canvas id="myChartline"></canvas>
+                                    </div>
+                                    <div id="value-progresschart" style="display: none;"><%= January %> <%= February %> <%= March %> <%= April %> <%= May %> <%= June %> <%= July %> <%= August %> <%= September %> <%= October %></div>
+                                    <script>
+                                        let root = document.getElementById('value-progresschart');
+                                        let months = root.innerText.split(' ');
+
+                                        const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                                        const data = [parseInt(months[1]), parseInt(months[2]), parseInt(months[3]), parseInt(months[4]), parseInt(months[5]), parseInt(months[6]), parseInt(months[7]), parseInt(months[8]), parseInt(months[9]), parseInt(months[10])];
+
+                                        // Get the canvas element
+                                        const ctx = document.getElementById('myChartline').getContext('2d');
+
+                                        // Create the chart
+                                        const plugin = {
+                                            id: 'customCanvasBackgroundColor',
+                                            beforeDraw: (chart, args, options) => {
+                                                const { ctx } = chart;
+                                                ctx.save();
+                                                ctx.globalCompositeOperation = 'destination-over';
+                                                ctx.fillStyle = options.color || 'white';
+                                                ctx.fillRect(0, 0, chart.width, chart.height);
+                                                ctx.restore();
+                                            }
+                                        };
+                                        const chart = new Chart(ctx, {
+                                            type: 'line', // Change chart type as needed (e.g., 'line', 'pie')
+                                            data: {
+                                                labels: labels,
+                                                datasets: [{
+                                                    label: 'Question upload progress',
+                                                    data: data,
+                                                    color: 'yellow',
+                                                    backgroundColor: '#a2bfe67e',
+                                                    borderColor: '#006dfc',
+                                                    tension: 0.4, // Customize colors
+                                                    fill: true,
+                                                    hoverOffset: 4,
+                                                }],
+                                            },
+                                            options: {
+                                                Plugins: {
+                                                    customCanvasBackgroundColor: {
+                                                        color: 'lightGreen',
+                                                    }
+                                                },
+                                                scales: {
+                                                    x: {
+                                                        grid: {
+                                                            display: false // Hide the vertical grid lines
+                                                        }
+                                                    },
+                                                    y: {
+                                                        suggestedmin: 0,
+                                                        grid: {
+                                                            display: false
+                                                        }
+                                                    }
+                                                    // Other scale configurations
+                                                },
+                                            },
+                                            plugins: [plugin],
+                                        });
+
+
+                                    </script>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="card mb-3">
+
+                                <div class="card-body" >
+                                    <div class="all-questions-title-teacher-profile mb-2">
+                                        <b>Questions Uploaded</b>
+                                    </div>
+                                    <div id="chartContainer"
+                                        style="border: 2px solid rgb(208, 203, 203); border-radius: 5px;">
+                                        <div>
+        
+                                            <div class="container">
+                                            <!-- make a row to mention all the colums first -->
+                                            <div class="row row-head">
+                                                <div class="col-1">
+                                                    SN
+                                                </div>
+                                                <div class="col-6">
+                                                    Question Name
+                                                </div>
+                                                <div class="col-1">
+                                                    Q-id
+                                                </div>
+                                                <div class="col-2">
+                                                    Difficulty
+                                                </div>
+                                                <div class="col-2">
+                                                    Date
+                                                </div>
+                                            </div>
+                                    
+                                            <hr>
+                                            <!-- now all the questions will be fetched by this loop -->
+                                            <!-- and all the information will be displayed in the grid of the page  -->
+                                            <!-- and all the information will be displayed in the grid of the page -->
+                                                <% let total_uploaded_q = uploads.length %>
+                                                <% for(q in uploads) { %>
+                                                    <div class="row">
+                                                        <!-- first column -->
+                                                        <div class="col-1">
+                                                            <%= total_uploaded_q - q %>.
+                                                        </div>
+                                                        
+                                                        <!-- second column  -->
+                                                        <div class="col-6">
+                                                            <a href="http://localhost:3000/practicePage/<%= rows[q].id %>">
+                                                                <%= rows[uploads[total_uploaded_q - q -1].qid-1].name %></a>
+                                                            </div>
+
+                                                        <!-- third column -->
+                                                        <div class="col-1">
+                                                            <%= uploads[total_uploaded_q - q-1].qid %>
+                                                        </div>
+
+                                                        <!-- Fourth column -->
+                                                        <div class="col-2">
+                                                            <span class="difficulty" id=<%=rows[uploads[total_uploaded_q - q-1].qid-1].difficulty%>><%= rows[uploads[total_uploaded_q - q-1].qid-1].difficulty.charAt(0).toUpperCase() +rows[uploads[total_uploaded_q - q-1].qid-1].difficulty.slice(1) %></span>
+                                                        </div>
+
+                                                        <!-- Fifth column -->
+                                                        <% let date=uploads[total_uploaded_q - q-1].dateuploaded.toString().split(" "); %>
+                                                        <div class="col-2">
+                                                           <%= date[2] %> <%= date[1] %>, <%= date[3]%100 %>
+                                                        </div>
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                            
+
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+                            
+
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
