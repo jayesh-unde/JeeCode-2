@@ -77,15 +77,39 @@ a {
         <h1>Test Results</h1>
 
         <div class="result-card">
-            <h2>TestId: <%= testResult.testId %></h2>
+            <h2>TestId: <%= testResult.testid %></h2>
             <p><strong>Score:</strong> <%= testResult.score %></p>
             <p><strong>Correct Answers:</strong> <%= testResult.correctquestion %></p>
             <p><strong>Wrong Answers:</strong> <%= testResult.wrongquestion %></p>
             <p><strong>Unattempted:</strong> <%= testResult.unattempted %></p>
             <p><strong>Time Spent:</strong> <%= testResult.timespent %> seconds</p>
         </div>
+        
+        <a href="javascript:void(0)" onclick="redirectToContest()">Return to Test Page</a>
 
-        <a href="/contest">Return to Test Page</a>
+
+
+        <!-- other content of the resultPage.ejs -->
+<a href="/leaderboard/<%= testResult.testid %>" class="btn btn-secondary">View Leaderboard</a>
+
     </div>
+    <script>
+        function redirectToContest() {
+            const visitedCount = <%= n %>+3;
+            console.log(visitedCount);
+            window.history.go(-visitedCount);
+            // You might want to add a fallback in case the user hasn't browsed 20 pages:
+            setTimeout(function(){
+                window.location.replace("/contest");
+            }, 100);
+        }
+        </script>
+        
+    
+    
+        
+        
+        
+        
 </body>
 </html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add additional CSS if needed -->
+    <link rel="stylesheet" href="/CSS/leaderboard.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="leaderboard-title">
+            <h2>Leaderboard for Test ID: <%= leaderboard[0].testId %></h2>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                    <th>Correct Answers</th>
+                    <th>Wrong Answers</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% leaderboard.forEach(entry => { %>
+                <tr>
+                    <td><%= entry.rank %></td>
+                    <td><%= entry.username %></td>
+                    <td><%= entry.score %></td>
+                    <td><%= entry.correctquestion %></td>
+                    <td><%= entry.wrongquestion %></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and jQuery (if needed) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

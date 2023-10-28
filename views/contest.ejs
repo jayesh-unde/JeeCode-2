@@ -4,27 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contests</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/CSS/contest.css"> <!-- assuming your CSS will be named contest.css and is in a folder named styles -->
 </head>
 <body>
 
-    <div class="contest-container">
-        <h1>Available Tests</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Available Tests</h1>
+        
+        <div class="row">
+            <% tests.forEach(test => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">TestId: <%= test.testid %></h2>
+                            <p class="card-text">Type: <%= test.type %></p>
+                            <p class="card-text">Duration: <%= test.duration %> minutes</p>
+                            <p class="card-text">Total Questions: <%= test.totalquestions %></p>
+                            <p class="card-text">Date: <%= test.testdate %></p>
     
-        <% tests.forEach(test => { %>
-        <div class="test-card">
-            <h2>TestId: <%= test.testid %></h2>
-            <p>Type: <%= test.type %></p>
-            <p>Duration: <%= test.duration %> minutes</p>
-            <p>Total Questions: <%= test.totalquestions %></p>
-            <p>Date: <%= test.testdate %></p>
-            <% if (testsTaken[test.testid]) { %>
-                <a href="/testResult/<%= username %>/<%= test.testid %>" class="view-result-btn">View Results</a>
-            <% } else { %>
-                <a href="/testInstructions/<%= test.testid %>" class="take-test-btn">Take Test</a>
-            <% } %>
+                            <% if (testsTaken[test.testid]) { %>
+                                <a href="/testResult/<%= username %>/<%= test.testid %>" class="btn btn-info">View Results</a>
+                            <% } else { %>
+                                <a href="/testInstructions/<%= test.testid %>" class="btn btn-primary">Take Test</a>
+                            <% } %>
+    
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
         </div>
-        <% }); %>
     </div>
     
 

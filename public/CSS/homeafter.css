@@ -10,7 +10,7 @@
         display: flex;
         flex-direction: column;  /* Stack children vertically */
         min-height: 100vh;
-        
+        background-color: #f3f7fa;
     }
     
     .content-wrapper {
@@ -202,18 +202,19 @@
         height: 40px;
         /* border: black solid 2px; */
         background-color:#ffb7005f;
-        border-radius: 8px;
+        border-radius: 10px;
     }
     
-    /* .btn-premium .nav-link{
+    .btn-premium .nav-link{
         margin: 0 5px;
         padding-top: 6px;
-    } */
+    }
     
     .profile-img{
-        width: 45px;
-        height: 45px;
+        width: 35px;
+        height: 35px;
         border-radius: 50%;
+        margin-bottom: 15px;
     }
     
     .btn-dropdown{
@@ -255,7 +256,7 @@
 }
 
 .topic-badge:hover {
-    background-color: #FFD2A5; /* Accent Soft Coral on hover */
+    background-color: #c9e6e1; /* Accent Soft Coral on hover */
     transform: translateY(-5px); /* Slight upward lift on hover */
 }
 
@@ -283,6 +284,5 @@
     max-width: 800px; /* Or whatever maximum width you desire */
     margin: 20px auto; /* Centers the container */
 }
-
 
 

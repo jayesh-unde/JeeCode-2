@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="/CSS/register.css"> -->
+
+</head>
+<body>
+    <% if (typeof details === 'undefined') { details = {}; } %>
+
+<form action="/edit_profile" method="post">
+    <div class="row mt-3">
+        <div class="col-md-8 offset-2">
+            <input type="hidden" value="<%= username %>" name="username">
+            <input type="hidden" value="<%= role %>" name="role">
+            <div class="mb-3 ">
+              <label for="school" class="form-label" class="form-control">School/College</label>
+              <input type="text" class="form-control"  value="<%= details.school ? details.school : '' %>" name="school"  placeholder="enter your school/college name">
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="age" class="form-label" class="form-control">Age</label>
+                    <input type="number" value="<%= details.age ? details.age : '' %>" class="form-control" name="age" placeholder="enter your age here">
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="exam" class="form-label" class="form-control">Exam</label>
+                    <input type="text" value="<%= details.exam ? details.exam : '' %>" class="form-control" name="exam" placeholder="enter your exam name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="address" class="form-label" class="form-control">Address</label>
+                    <input type="text" value="<%= details.address ? details.address : '' %>" class="form-control" name="address" placeholder="enter your address here">
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="country" class="form-label" class="form-control">Country</label>
+                    <input type="text" value="<%= details.country ? details.country : '' %>" class="form-control" name="country" placeholder="enter your country name">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="mobile" class="form-label">Mobile</label>
+                <input type="number" class="form-control" value="<%= details.mobile ? details.mobile : '' %>" name="mobile" placeholder="enter your mobile number">
+            </div>
+            <div class="mb-3">
+                <label for="website" class="form-label">Website</label>
+                <input type="text" class="form-control" value="<%= details.website ? details.website : '' %>" name="website" placeholder="enter url of your website">
+            </div>
+            <div class="mb-3">
+                <label for="twitter" class="form-label">Twitter</label>
+                <input type="text" class="form-control" value="<%= details.twitter ? details.twitter : '' %>" name="twitter" placeholder="enter url of your twitter">
+            </div>
+            <div class="mb-3">
+                <label for="github" class="form-label">Github</label>
+                <input type="text" class="form-control" value="<%= details.github ? details.github : '' %>" name="github" placeholder="enter url of your github">
+            </div>
+            <div class="mb-3">
+                <label for="linkedin" class="form-label">LinkedIn</label>
+                <input type="text" class="form-control" value="<%= details.linkedin ? details.linkedin : '' %>" name="linkedin" placeholder="enter url of your LinkedIn">
+            </div>
+            <div class="mb-3">
+                <label for="instagram" class="form-label">Instagram</label>
+                <input type="text" class="form-control" value="<%= details.instagram ? details.instagram : '' %>" name="instagram" placeholder="enter url of your Instagram">
+            </div>
+            <button class="btn btn-dark edit-btn mt-3" type="submit">Edit</button>
+        </div>
+    </div>
+</form>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous"></script>
+</body>
+</html>

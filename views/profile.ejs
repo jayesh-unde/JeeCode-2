@@ -28,9 +28,16 @@
               <a class="nav-link" href="http://localhost:3000">Explore</a>
             </li>
             <% if(role=='student' ){ %>
-              <li class="nav-item">
-                <a class="nav-link" href="http://localhost:3000/subjectSelection">Problems</a>
-              </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="subjectDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Problems
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="subjectDropdown">
+                        <a class="dropdown-item" href="/questions/physics">Physics</a>
+                        <a class="dropdown-item" href="/questions/chemistry">Chemistry</a>
+                        <a class="dropdown-item" href="/questions/maths">Maths</a>
+                    </div>
+                </li>
             <% } %>
             <% if(role=='teacher' ){ %>
               <li class="nav-item">
@@ -38,10 +45,10 @@
               </li>
             <% } %>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contest</a>
+              <a class="nav-link" href="/contest">Contest</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="/contactus">About</a>
             </li>
           </ul>
 
@@ -49,7 +56,7 @@
           <!-- profile dropdown  -->
           <div class="btn-group" role="group">
             <button id="Drop1" type="button" class="btn btn-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="/images/profile photo1.png" alt="profile.png" class="profile-img">
+              <img src="/images/profile photo.png" alt="profile.png" class="profile-img">
               <%= username  %>
             </button>
             <ul class="dropdown-menu " aria-labelledby="Drop1">
@@ -66,123 +73,94 @@
         </div>
       </div>
     </nav>
-    <!-- <div class="profileImage"></div> -->
-    <!-- <div id="chartContainer">
-        <canvas id="myChartline2"></canvas>
-    </div>
-    <script>
-    const labels2 = ['Label 0','Label 1', 'Label 2', 'Label 3','label 4','Label 0','Label 1', 'Label 2', 'Label 3','label 4'];
-    const data2 = [0,10, 20, 10,40,23,10,26 , 36,10,40];
-
-    // Get the canvas element
-    const ctx2 = document.getElementById('myChartline2').getContext('2d');
-
-    // Create the chart
-    const plugin2 = {
-        id: 'customCanvasBackgroundColor',
-        beforeDraw: (chart, args, options) => {
-                const {ctx2} = chart;
-                ctx.save();
-                ctx.globalCompositeOperation = 'destination-over';
-                ctx.fillStyle = options.color || 'white';
-                ctx.fillRect(0, 0, chart.width, chart.height);
-                ctx.restore();
-            }
-        };
-    const chart2 = new Chart(ctx2, {
-    type: 'bar', // Change chart type as needed (e.g., 'line', 'pie')
-    data: {
-    labels: labels2,
-    datasets: [{
-        label: 'My Chart',
-        data: data2,
-        color: 'yellow',
-        backgroundColor: ['#a2bfe67e','orange','#a2bae67e','#ffbe429f','#aa33fd33','#a2efe67e','#00ff0099','#a2cfe67e','#ed11e67e'],
-        borderColor: '#006dfc',
-        tension:0.4, // Customize colors
-        fill : true,
-        hoverOffset: 4,
-    }],
-    },    
-    plugins:[plugin2],
-    options:{
-        Plugins:{
-            customCanvasBackgroundColor: {
-                color: 'lightGreen',
-            }
-        }
-    },
-
-    }); -->
-
-
-    </script>
 
 
 
-                        <!-- calculation for all the questions -->
-                        <% let easy = 0,medium=0,hard=0 %>
-                        <% let physicsEasy = 0,chemistryEasy=0,mathsEasy=0 %>
-                        <% let physicsMedium = 0,chemistryMedium=0,mathsMedium=0 %>
-                        <% let physicsHard= 0,chemistryHard=0,mathsHard=0 %>
-                        <% for(object in rows) {%>
-                        
-                        <% if(rows[object].difficulty==='easy'){ easy +=1; %>
-                            <% if(rows[object].subject==='physics') physicsEasy += 1  %>
-                            <% if(rows[object].subject==='chemistry') chemistryEasy += 1  %>
-                            <% if(rows[object].subject==='maths') mathsEasy += 1  }%>
-    
-                        <% if(rows[object].difficulty==='medium'){ medium +=1; %>
-                            <% if(rows[object].subject==='physics') physicsMedium += 1  %>
-                            <% if(rows[object].subject==='chemistry') chemistryMedium += 1  %>
-                            <% if(rows[object].subject==='maths') mathsMedium += 1  }%>
-    
-                        <% if(rows[object].difficulty==='hard'){ hard +=1; %>
-                            <% if(rows[object].subject==='physics') physicsHard += 1  %>
-                            <% if(rows[object].subject==='chemistry') chemistryHard += 1  %>
-                            <% if(rows[object].subject==='maths') mathsHard += 1  }}%>
-                        
-    
-                        <!-- calculation for the user  -->
-                        
-                        <% let easySolved = 0,mediumSolved=0,hardSolved=0 %>
-                        <% let physicsEasySolved = 0,chemistryEasySolved=0,mathsEasySolved=0 %>
-                        <% let physicsMediumSolved = 0,chemistryMediumSolved=0,mathsMediumSolved=0 %>
-                        <% let physicsHardSolved= 0,chemistryHardSolved=0,mathsHardSolved=0 %>
-                        <% let physicsTopics= new Set(),chemistryTopics=new Set(),mathsTopics= new Set(); %>
-                        
 
-                        <% for(obj in solvedResult) {%>
-                        <% if(solvedResult[obj].doneStatus == false) continue; %>
 
-                        <% if(rows[solvedResult[obj].questionid].difficulty ==='easy'){ easySolved +=1; %>
-                            <% if(rows[solvedResult[obj].questionid].subject ==='physics'){physicsEasySolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid].topic) }  %>
-                            <% if(rows[solvedResult[obj].questionid].subject ==='chemistry'){chemistryEasySolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid].topic)}  %>
-                            <% if(rows[solvedResult[obj].questionid].subject ==='maths'){ mathsEasySolved +=1;mathsTopics.add(rows[solvedResult[obj].questionid].topic)} }%>
-                            
-    
-                        <% if(rows[solvedResult[obj].questionid].difficulty==='medium'){ mediumSolved +=1; %>
-                            <% if(rows[solvedResult[obj].questionid].subject ==='physics'){ physicsMediumSolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid].topic)} %>
-                            <% if(rows[solvedResult[obj].questionid].subject ==='chemistry'){ chemistryMediumSolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid].topic)} %>
-                            <% if(rows[solvedResult[obj].questionid].subject ==='maths'){ mathsMediumSolved +=1; mathsTopics.add(rows[solvedResult[obj].questionid].topic)}}%>
-    
-    
-                        <% if(rows[solvedResult[obj].questionid].difficulty==='hard'){ hardSolved +=1; %>
-                            <% if(rows[solvedResult[obj].questionid].subject ==='physics'){ physicsHardSolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid].topic)} %>
-                            <% if(rows[solvedResult[obj].questionid].subject ==='chemistry'){ chemistryHardSolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid].topic)} %>
-                            <% if(rows[solvedResult[obj].questionid].subject ==='maths'){ mathsHardSolved +=1;mathsTopics.add(rows[solvedResult[obj].questionid].topic)} }}%>
-    
-    
-                        <% let totalSolved = easySolved+mediumSolved+hardSolved %>
-                        <% let total = easy+medium+hard %>
-                        <% let Avg = (totalSolved/total)*100 %>
-                        <% let easyAvg = (easySolved/easy)*100 %>
-                        <% let mediumAvg = (mediumSolved/medium)*100 %>
-                        <% let hardAvg = (hardSolved/hard)*100 %>
+        <!-- calculation for all the questions -->
+        <% let easy = 0,medium=0,hard=0 %>
+        <% let physicsEasy = 0,chemistryEasy=0,mathsEasy=0 %>
+        <% let physicsMedium = 0,chemistryMedium=0,mathsMedium=0 %>
+        <% let physicsHard= 0,chemistryHard=0,mathsHard=0 %>
+        <% for(object in rows) {%>
+        
+        <% if(rows[object].difficulty==='easy'){ easy +=1; %>
+            <% if(rows[object].subject==='physics') physicsEasy += 1  %>
+            <% if(rows[object].subject==='chemistry') chemistryEasy += 1  %>
+            <% if(rows[object].subject==='maths') mathsEasy += 1  }%>
 
-                        <% physicsTopics = Array.from(physicsTopics); %>
-                        <% mathsTopics = Array.from(mathsTopics); %>
-                        <% chemistryTopics = Array.from(chemistryTopics); %>
+        <% if(rows[object].difficulty==='medium'){ medium +=1; %>
+            <% if(rows[object].subject==='physics') physicsMedium += 1  %>
+            <% if(rows[object].subject==='chemistry') chemistryMedium += 1  %>
+            <% if(rows[object].subject==='maths') mathsMedium += 1  }%>
+
+        <% if(rows[object].difficulty==='hard'){ hard +=1; %>
+            <% if(rows[object].subject==='physics') physicsHard += 1  %>
+            <% if(rows[object].subject==='chemistry') chemistryHard += 1  %>
+            <% if(rows[object].subject==='maths') mathsHard += 1  }}%>
+        
+
+        <!-- calculation for the user  -->
+        
+        <% let easySolved = 0,mediumSolved=0,hardSolved=0 %>
+        <% let physicsEasySolved = 0,chemistryEasySolved=0,mathsEasySolved=0 %>
+        <% let physicsMediumSolved = 0,chemistryMediumSolved=0,mathsMediumSolved=0 %>
+        <% let physicsHardSolved= 0,chemistryHardSolved=0,mathsHardSolved=0 %>
+        <% let physicsTopics= new Set(),chemistryTopics=new Set(),mathsTopics= new Set(); %>
+        <% let physicsQuestions = new Set(),chemistryQuestions = new Set(),mathsQuestions = new Set(); %>
+        <% let January=0,February=0,March=0,April=0,May=0,June=0,July=0,August=0,September=0,October=0; %>
+        
+
+        <% for(obj in solvedResult) {%>
+            
+        <% if(solvedResult[obj].doneStatus === false || (physicsQuestions.has(solvedResult[obj].questionid-1) || mathsQuestions.has(solvedResult[obj].questionid-1) || (chemistryQuestions.has(solvedResult[obj].questionid-1)))) continue; %>
+        
+        <% if(rows[solvedResult[obj].questionid-1].difficulty === 'easy'){ easySolved +=1; %>
+            <% if(rows[solvedResult[obj].questionid-1].subject ==='physics'){physicsEasySolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid-1].topic); physicsQuestions.add(solvedResult[obj].questionid-1);}  %>
+            <% if(rows[solvedResult[obj].questionid-1].subject ==='chemistry'){chemistryEasySolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid-1].topic); chemistryQuestions.add(solvedResult[obj].questionid-1);}  %>
+            <% if(rows[solvedResult[obj].questionid-1].subject ==='maths'){ mathsEasySolved +=1;mathsTopics.add(rows[solvedResult[obj].questionid-1].topic); mathsQuestions.add(solvedResult[obj].questionid-1);} }%>
+            
+        
+        <% if(rows[solvedResult[obj].questionid -1].difficulty==='medium'){ mediumSolved +=1; %>
+            <% if(rows[solvedResult[obj].questionid -1].subject ==='physics'){ physicsMediumSolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid - 1 ].topic); physicsQuestions.add(solvedResult[obj].questionid -1);} %>
+            <% if(rows[solvedResult[obj].questionid -1].subject ==='chemistry'){ chemistryMediumSolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid -1].topic); chemistryQuestions.add(solvedResult[obj].questionid-1);} %>
+            <% if(rows[solvedResult[obj].questionid-1].subject ==='maths'){ mathsMediumSolved +=1; mathsTopics.add(rows[solvedResult[obj].questionid-1].topic); mathsQuestions.add(solvedResult[obj].questionid);}}%>
+
+       
+        <% if(rows[solvedResult[obj].questionid  -1 ].difficulty === 'hard' ){ hardSolved +=1; %>
+            <% if(rows[solvedResult[obj].questionid - 1].subject ==='physics'){ physicsHardSolved +=1; physicsTopics.add(rows[solvedResult[obj].questionid -1 ].topic); physicsQuestions.add(solvedResult[obj].questionid - 1);} %>
+            <% if(rows[solvedResult[obj].questionid -1 ].subject ==='chemistry'){ chemistryHardSolved +=1; chemistryTopics.add(rows[solvedResult[obj].questionid -1].topic); chemistryQuestions.add(solvedResult[obj].questionid -1);} %>
+            <% if(rows[solvedResult[obj].questionid-1].subject ==='maths'){ mathsHardSolved +=1;mathsTopics.add(rows[solvedResult[obj].questionid-1].topic); mathsQuestions.add(solvedResult[obj].questionid-1);}  }%>
+            
+        <% let month = solvedResult[obj].date.toString().split(" ")[1]; %>
+        <% if(month === 'Jan') January += 1; else if(month === 'Feb') February += 1; else if(month === 'Mar') March += 1; else if(month === 'Apr') April += 1; else if(month === 'May') May += 1; else if(month === 'Jun') June += 1; else if(month === 'Jul') July += 1; else if(month === 'Aug') August += 1; else if(month === 'Sep') September += 1; else if(month === 'Oct') October += 1; }%>
+
+       
+        <% let totalSolved = easySolved+mediumSolved+hardSolved %>
+        <% let total = easy+medium+hard %>
+        <% let Avg = (totalSolved/total)*100 %>
+        <% let easyAvg = (easySolved/easy)*100 %>
+        <% let mediumAvg = (mediumSolved/medium)*100 %>
+        <% let hardAvg = (hardSolved/hard)*100 %>
+        
+
+        <% physicsTopics = Array.from(physicsTopics); %>
+        <% mathsTopics = Array.from(mathsTopics); %>
+        <% chemistryTopics = Array.from(chemistryTopics); %>
+
+
+        <% totalPhysics = physicsEasy + physicsMedium + physicsHard %>
+        <% totalChemisty =chemistryEasy + chemistryHard + chemistryMedium %>
+        <% totalMaths = mathsEasy +mathsHard + mathsMedium %>
+        <% maxVal = Math.max(totalChemisty,Math.max(totalMaths,totalPhysics)) %>
+        
+
+
+        <% totalPhysicsSolved = physicsEasySolved + physicsMediumSolved + physicsHardSolved %>
+        <% totalChemistySolved =chemistryEasySolved + chemistryHardSolved + chemistryMediumSolved %>
+        <% totalMathsSolved = mathsEasySolved +mathsHardSolved + mathsMediumSolved %>
+        <% maxValSolved = Math.max(totalChemistySolved,Math.max(totalMathsSolved,totalPhysicsSolved)) %>
 
 
 
@@ -216,8 +194,21 @@
                                     <h4>
                                         <%= username %>
                                     </h4>
-                                    <p class="text-secondary mb-1">Jee student</p>
-                                    <p class="text-muted font-size-sm">School</p>
+                                    <p class="text-secondary mb-1">
+                                        <% if(!details || (details.exam === null && details.role === null)) { %>
+                                            not provided
+                                        <% } else { %> 
+                                            <%= details.exam %> <%= details.role %>
+                                        <% } %>
+                                    </p>
+                                    <p class="text-muted font-size-sm">
+                                        <% if(!details || details.school === null) { %>
+                                            not provided
+                                        <% } else { %> 
+                                            <%= details.school %>
+                                        <% } %>
+                                    </p>
+                                    
                                     <!-- <button class="btn btn-primary">Follow</button> -->
                                     <!-- <button class="btn btn-outline-primary">Message</button> -->
                                 </div>
@@ -232,7 +223,7 @@
 
                     <div class="card mt-3">
                         <a class="btn btn-info " target="__blank"
-                            href="#">Edit profile</a>
+                            href="/edit/<%= role %>/<%= username %>">Edit profile</a>
                     </div>
 
 
@@ -246,23 +237,64 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Name</h6>
-                                <span class="text-secondary"><%= user.fullname %></span>
+                                <span class="text-secondary">
+                                    <% if(!user || user.fullname=== null){ %>
+                                        not provided
+                                    <%}else{ %> 
+                                        <%= user.fullname %>
+                                    <% } %>
+                                </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Email</h6>
-                                <span class="text-secondary"><%= user.email %></span>
+                                <span class="text-secondary">
+                                    <% if(!user || user.email=== null){ %>
+                                        not provided
+                                    <%}else{ %> 
+                                        <%= user.email %>
+                                    <% } %>
+                                   
+                                </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Country</h6>
-                                <span class="text-secondary">not provided</span>
+                                <span class="text-secondary">
+                                    <% if(!details || details.country=== null){ %>
+                                        not provided
+                                    <%}else{ %> 
+                                        <%= details.country%>
+                                    <% } %>
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Age</h6>
+                                <span class="text-secondary">
+                                    <% if(!details || details.age=== null){ %>
+                                        not provided
+                                    <%}else{ %> 
+                                        <%= details.age%>
+                                    <% } %>
+                                </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Mobile</h6>
-                                <span class="text-secondary">not provided</span>
+                                <span class="text-secondary">
+                                    <% if(!details || details.mobile === null){ %>
+                                        not provided
+                                    <%}else{ %> 
+                                        <%= details.mobile %>
+                                    <% } %>
+                                </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Address</h6>
-                                <span class="text-secondary">not provided</span>
+                                <span class="text-secondary">
+                                    <% if(!details || details.address === null){ %>
+                                        not provided
+                                    <%}else{ %> 
+                                        <%= details.address %>
+                                    <% } %>
+                                </span>
                             </li>
                         </ul>
                     </div>
@@ -276,7 +308,7 @@
 
 
 
-
+                    
 
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush">
@@ -291,7 +323,13 @@
                                             d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
                                         </path>
                                     </svg>Website</h6>
-                                <span class="text-secondary">not provided</span>
+                                <span class="text-secondary">
+                                    <% if(!details || details.website === null){ %>
+                                        not provided
+                                    <%}else{ %> 
+                                        <%= details.website %>
+                                    <% } %>
+                                </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -302,7 +340,12 @@
                                             d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
                                         </path>
                                     </svg>Github</h6>
-                                <span class="text-secondary">not provided</span>
+                                <span class="text-secondary">
+                                <% if(!details || details.github === null){ %>
+                                    not provided
+                                <%}else{ %> 
+                                    <%= details.github %>
+                                <% } %></span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -313,7 +356,13 @@
                                             d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
                                         </path>
                                     </svg>Twitter</h6>
-                                <span class="text-secondary">not provided</span>
+                                <span class="text-secondary">
+                                    <% if(!details || details.twitter === null){ %>
+                                        not provided
+                                    <%}else{ %> 
+                                        <%= details.twitter %>
+                                    <% } %>
+                                </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -324,7 +373,13 @@
                                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                                     </svg>Instagram</h6>
-                                <span class="text-secondary">not provided</span>
+                                <span class="text-secondary">
+                                    <% if(!details || details.instagram === null){ %>
+                                        not provided
+                                    <%}else{ %> 
+                                        <%= details.instagram %>
+                                    <% } %>
+                                </span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -333,8 +388,14 @@
                                         class="feather feather-facebook mr-2 icon-inline text-primary">
                                         <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
                                         </path>
-                                    </svg>Facebook</h6>
-                                <span class="text-secondary">not provided</span>
+                                    </svg>linkedin</h6>
+                                <span class="text-secondary">
+                                    <% if(!details || details.linkedin === null){ %>
+                                        not provided
+                                    <%}else{ %> 
+                                        <%= details.linkedin %>
+                                    <% } %>
+                                </span>
                             </li>
                         </ul>
                     </div>
@@ -366,22 +427,39 @@
                             </li>
                         </ul>
                     </div>
+                    
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
                 </div>
                 <div class="col-md-8">
                     <!-- start -->
                     <div class="card mb-3">
 
-                        <div class="card-body">
-                            <div id="chartContainer">
-                                <canvas id="myChartline"></canvas>
+                        <div class="card-body" style="height: 450px;">
+                            <div id="chartContainer" style="height: 420px; border: 2px solid rgb(208, 203, 203); border-radius: 5px;">
+                                <canvas id="myChartline" ></canvas>
                             </div>
-                            <div id="value-progresschart" style="display: none;"><%=  mediumSolved + hardSolved + easySolved  %></div>
+                            <div id="value-progresschart" style="display: none;"><%=  maxValSolved  %> <%= January %> <%= February %> <%= March %> <%= April %> <%= May %> <%= June %> <%= July %> <%= August %> <%= September %> <%= October %></div>
                             <script>
                                 let root = document.getElementById('value-progresschart');
-                                let sept = parseInt(root.innerText);
-                                const labels = ['February','March', 'April', 'May' , 'June', 'July','August','September'];
-                                const data = [2,0,4,5,6,17,14,23];
+                                let months = root.innerText.split(' ');
+                                
+                                const labels = ['January','February','March', 'April', 'May' , 'June', 'July','August','September','October','November','December'];
+                                const data = [parseInt(months[1]),parseInt(months[2]),parseInt(months[3]),parseInt(months[4]),parseInt(months[5]),parseInt(months[6]),parseInt(months[7]),parseInt(months[8]),parseInt(months[9]),parseInt(months[10])];
 
                                 // Get the canvas element
                                 const ctx = document.getElementById('myChartline').getContext('2d');
@@ -426,6 +504,7 @@
                                                 }
                                             },
                                             y: {
+                                                suggestedmin : 0,
                                                 grid: {
                                                     display: false
                                                 }
@@ -442,6 +521,33 @@
                     </div>
                     <!-- end  -->
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <div class="row gutters-sm">
                         <div class="col-sm-6 mb-3">
                             <div class="card h-100">
@@ -449,9 +555,9 @@
                                     <h6 class="d-flex align-items-center mb-3">Total Questions</h6>
                                     
                                     <small>Question Solved &nbsp; <%= totalSolved %>/<%= total %>  </small>
-                    
+                                    <div style="display: none;" id="normal-progress-info"><%= Avg %></div>
                                     <div class="progress mb-3" style="height: 12px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: <%= Avg %>%"
+                                        <div class="progress-bar bg-primary" id="normal-progress" role="progressbar" style="width: 0%"
                                             aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     
@@ -459,25 +565,64 @@
 
                                     <small>Easy &nbsp;<%= easySolved %>/<%= easy %></small>
                                     <div class="progress mb-3" style="height: 12px">
-                                        
-                                        <div class="progress-bar bg-success" role="progressbar" style="width:<%= easyAvg %>%"
+                                        <div style="display: none;" id="easy-progress-info"><%= easyAvg %></div>
+                                        <div class="progress-bar bg-success" id="easy-progress" role="progressbar" style="width:0%"
                                             aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <small>Medium &nbsp;<%= mediumSolved %>/<%= medium %> </small>
 
                                     <div class="progress mb-3" style="height: 12px">
-                                        <%  %>
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:<%= mediumAvg %>%"
+                                       <div style="display: none;" id="medium-progress-info"><%= mediumAvg %></div>
+                                        <div class="progress-bar bg-warning" id="medium-progress" role="progressbar" style="width:0%"
                                             aria-valuenow="89" aria-valuemin="0" aria-valuemax="100" id="medium"></div>
                                     </div>
+                                    
                                     <small>Hard &nbsp; <%= hardSolved %>/<%= hard %></small>
                                     <div class="progress mb-3" style="height: 12px">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width:<%= hardAvg %>%"
+                                        <div style="display: none;" id="hard-progress-info"><%= hardAvg %></div>
+                                        <div class="progress-bar bg-danger" id="hard-progress" role="progressbar" style="width:0%"
                                             aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
+
+
+
+                                    <script>
+                                        // JavaScript to update the custom progress bar width
+                                        const customProgressBar = document.getElementById('normal-progress');
+                                        const customProgressBar1 = document.getElementById('easy-progress');
+                                        const customProgressBar2 = document.getElementById('medium-progress');
+                                        const customProgressBar3 = document.getElementById('hard-progress');
+                                        const customProgressBarObj = document.getElementById('normal-progress-info');
+                                        const customProgressBarObj1 = document.getElementById('easy-progress-info');
+                                        const customProgressBarObj2 = document.getElementById('medium-progress-info');
+                                        const customProgressBarObj3 = document.getElementById('hard-progress-info');
+                        
+                                        let progressValue = parseInt(customProgressBarObj.innerText);
+                                        let progressValue1 = parseInt(customProgressBarObj1.innerText);
+                                        let progressValue2 = parseInt(customProgressBarObj2.innerText);
+                                        let progressValue3 = parseInt(customProgressBarObj3.innerText);
+                                    
+                            
+                                        customProgressBar.style.width = `${progressValue}%`;
+                                        customProgressBar1.style.width = `${progressValue1}%`;
+                                        customProgressBar2.style.width = `${progressValue2}%`;
+                                        customProgressBar3.style.width = `${progressValue3}%`;
+                                      </script>
+
+
                                 </div>
                             </div>
                         </div>
+
+
+
+
+
+
+
+
+
+                        
                         <div class="col-sm-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
@@ -501,7 +646,7 @@
                                         let val = pointer.innerText.split('/');
                                         let ts = parseInt(val[0]);
                                         let total = parseInt(val[1]);
-                                        console.log(val,total);
+                                        
                                         let data2 = [ts,ts-1,ts+1,ts,ts+1,ts-1,ts,ts-1,ts,ts+1];
                                         
                                         
@@ -569,18 +714,8 @@
 
 
 
-                        <% totalPhysics = physicsEasy + physicsMedium + physicsHard %>
-                        <% totalChemisty =chemistryEasy + chemistryHard + chemistryMedium %>
-                        <% totalMaths = mathsEasy +mathsHard + mathsMedium %>
-                        <% maxVal = Math.max(totalChemisty,Math.max(totalMaths,totalPhysics)) %>
-                        <% console.log(maxVal)%>
-
-
-                        <% totalPhysicsSolved = physicsEasySolved + physicsMediumSolved + physicsHardSolved %>
-                        <% totalChemistySolved =chemistryEasySolved + chemistryHardSolved + chemistryMediumSolved %>
-                        <% totalMathsSolved = mathsEasySolved +mathsHardSolved + mathsMediumSolved %>
-                        <% maxValSolved = Math.max(totalChemistySolved,Math.max(totalMathsSolved,totalPhysicsSolved)) %>
-                        <% console.log(maxValSolved)%>
+                        
+                        
                     
                         <div class="col-sm-6 mb-3">
                             <div class="card h-100">
@@ -603,7 +738,7 @@
                                         console.log(vals);
                                         
                                         const labels3 = ['Physics', 'Chemistry', 'Maths'];
-                                        const data3 = [parseInt(vals[4]), parseInt(vals[5]), parseInt(vals[6])];
+                                        const data3 = [parseInt(vals[4])/parseInt(vals[0]), parseInt(vals[5])/parseInt(vals[1]), parseInt(vals[6])/parseInt(vals[2])];
 
                                         // Get the canvas element
                                         const ctx3 = document.getElementById('myChartline3').getContext('2d');
@@ -643,10 +778,19 @@
                                                     }
                                                 },
                                                 scales: {
+                                                    x: {
+                                                        grid: {
+                                                            display: false // Hide the vertical grid lines
+                                                        }
+                                                    },
+                                        
                                                     y: {
+                                                        grid: {
+                                                            display: false
+                                                        },
                                                         beginAtZero: true, // This will start the y-axis at 0
                                                         suggestedMin: 0, // Set the minimum y-axis value
-                                                        suggestedMax: parseInt(vals[3]) , // Set the maximum y-axis value
+                                                        suggestedMax: 1 , // Set the maximum y-axis value
                                                     }
                                                 }
                                             },
@@ -741,9 +885,215 @@
                                                         color: 'lightGreen',
                                                     }
                                                 },
-                                                scales:{
-                                                    y:{
-                                                        suggestedMax : 1
+                                                scales: {
+                                                    x: {
+                                                        grid: {
+                                                            display: false // Hide the vertical grid lines
+                                                        }
+                                                    },
+                                        
+                                                    y: {
+                                                        grid: {
+                                                            display: false
+                                                        },
+                                                        beginAtZero: true, // This will start the y-axis at 0
+                                                        suggestedMin: 0, // Set the minimum y-axis value
+                                                        suggestedMax: 1 , // Set the maximum y-axis value
+                                                    }
+                                                }
+                                            },
+
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="d-flex align-items-center mb-3"> SubjectWise Analysis </h6>
+                                    <span class="text-secondary">Chemistry</span>
+                                    <br>
+                                    <small>Total Questions <%= totalChemistySolved %>/<%= totalChemisty %></small>
+                                    <div id="values4" style="display: none;"><%= totalChemisty %> <%= totalChemistySolved %> <%= chemistryEasy %> <%= chemistryEasySolved %> <%=  chemistryMedium %> <%= chemistryMediumSolved %> <%= chemistryHard %> <%= chemistryHardSolved %></div>
+                                    <div id="chartContainer2">
+                                        <canvas id="myChartline5" height="250px"></canvas>
+                                    </div>
+                                    <script>
+
+                                        let vals4pointer = document.getElementById('values4');
+                                        let vals4 = vals4pointer.innerText;
+                                        vals = vals4.split(' ');
+
+                                        const labels5 = ['Easy', 'Medium', 'Hard'];
+                                        const data5 = [parseInt(vals[3])/parseInt(vals[2]),parseInt(vals[5])/parseInt(vals[4]),parseInt(vals[7])/parseInt(vals[6])];
+                                        // Get the canvas element
+                                        const ctx5 = document.getElementById('myChartline5').getContext('2d');
+
+                                        // Create the chart
+                                        const plugin5 = {
+                                            id: 'customCanvasBackgroundColor',
+                                            beforeDraw: (chart, args, options) => {
+                                                const { ctx5 } = chart;
+                                                ctx.save();
+                                                ctx.globalCompositeOperation = 'destination-over';
+                                                ctx.fillStyle = options.color || 'white';
+                                                ctx.fillRect(0, 0, chart.width, chart.height);
+                                                ctx.restore();
+                                            }
+                                        };
+                                        const chart5 = new Chart(ctx5, {
+                                            type: 'bar', // Change chart type as needed (e.g., 'line', 'pie')
+                                            data: {
+                                                labels: labels5,
+                                                datasets: [{
+                                                    label: 'Chemistry',
+                                                    data: data5,
+                                                    color: 'yellow',
+                                                    backgroundColor: ['#00ff0099', '#ffc400a9', '#ff000099'],
+                                                    borderColor: 'black',
+                                                    tension: 0.4, // Customize colors
+                                                    fill: true,
+                                                    hoverOffset: 4,
+                                                }],
+                                            },
+                                            plugins: [plugin5],
+                                            options: {
+                                                Plugins: {
+                                                    customCanvasBackgroundColor: {
+                                                        color: 'lightGreen',
+                                                    }
+                                                },
+                                                scales: {
+                                                    x: {
+                                                        grid: {
+                                                            display: false // Hide the vertical grid lines
+                                                        }
+                                                    },
+                                        
+                                                    y: {
+                                                        grid: {
+                                                            display: false
+                                                        },
+                                                        beginAtZero: true, // This will start the y-axis at 0
+                                                        suggestedMin: 0, // Set the minimum y-axis value
+                                                        suggestedMax: 1 , // Set the maximum y-axis value
+                                                    }
+                                                }
+                                            },
+
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                        
+
+
+
+
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="d-flex align-items-center mb-3"> SubjectWise Analysis </h6>
+                                    <span class="text-secondary">Mathematics</span>
+                                    <br>
+                                    <small>Total Questions <%= totalMathsSolved %>/<%= totalMaths %></small>
+                                    <div id="values-maths" style="display: none;"><%= totalMaths %> <%= totalMathsSolved%> <%= mathsEasy %> <%= mathsEasySolved%> <%=  mathsMedium%> <%= mathsMediumSolved %> <%= mathsHard%> <%= mathsHardSolved %></div>
+                                    <div id="chartContainer-maths">
+                                        <canvas id="myChartline-maths" height="250px"></canvas>
+                                    </div>
+                                    <script>
+
+                                        let values_maths = document.getElementById('values-maths');
+                                        let vals_maths = values_maths.innerText.split(' ');
+
+                                        const labels_maths = ['Easy', 'Medium', 'Hard'];
+                                        const data_maths = [parseInt(vals_maths[3])/parseInt(vals_maths[2]),parseInt(vals_maths[5])/parseInt(vals_maths[4]),parseInt(vals_maths[7])/parseInt(vals_maths[6])];
+                                        // Get the canvas element
+                                        const ctx_maths = document.getElementById('myChartline-maths').getContext('2d');
+
+                                        // Create the chart
+                                        const plugin_maths = {
+                                            id: 'customCanvasBackgroundColor',
+                                            beforeDraw: (chart, args, options) => {
+                                                const { ctx_maths } = chart;
+                                                ctx.save();
+                                                ctx.globalCompositeOperation = 'destination-over';
+                                                ctx.fillStyle = options.color || 'white';
+                                                ctx.fillRect(0, 0, chart.width, chart.height);
+                                                ctx.restore();
+                                            }
+                                        };
+                                        const chart_maths = new Chart(ctx_maths, {
+                                            type: 'bar', // Change chart type as needed (e.g., 'line', 'pie')
+                                            data: {
+                                                labels: labels_maths,
+                                                datasets: [{
+                                                    label: 'Mathematics',
+                                                    data: data_maths,
+                                                    color: 'yellow',
+                                                    backgroundColor: ['#00ff0099', '#ffc400a9', '#ff000099'],
+                                                    borderColor: 'black',
+                                                    tension: 0.4, // Customize colors
+                                                    fill: true,
+                                                    hoverOffset: 4,
+                                                }],
+                                            },
+                                            plugins: [plugin_maths],
+                                            options: {
+                                                Plugins: {
+                                                    customCanvasBackgroundColor: {
+                                                        color: 'lightGreen',
+                                                    }
+                                                },
+                                                scales: {
+                                                    x: {
+                                                        grid: {
+                                                            display: false // Hide the vertical grid lines
+                                                        }
+                                                    },
+                                        
+                                                    y: {
+                                                        grid: {
+                                                            display: false
+                                                        },
+                                                        beginAtZero: true, // This will start the y-axis at 0
+                                                        suggestedMin: 0, // Set the minimum y-axis value
+                                                        suggestedMax: 1 , // Set the maximum y-axis value
                                                     }
                                                 }
                                             },
@@ -780,6 +1130,9 @@
 
 
 
+
+
+
                     </div>
 
 
@@ -789,6 +1142,12 @@
 
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

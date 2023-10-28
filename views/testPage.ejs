@@ -11,14 +11,15 @@
 <body>
     <form action="/submitTest" method="post">
         <input type="hidden" name="testId" value="<%= test.testid %>">
-
+        <input type="hidden" name="visitedCount" id="visitedCount">
+        <input type="hidden" name="timeSpent" id="timeSpent">
+        
         <div class="test-container">
 
             <!-- Timer and Sections Navigation -->
             <div class="left-panel">
                 <div class="timer">
                     Time left: <span id="timerDisplay">00:00</span>
-                    <input type="hidden" name="timeSpent" id="timeSpent">
                 </div>
                 <% if (test.type === "full test") { %>
                     <div class="section-nav">
@@ -26,14 +27,13 @@
                         <a href="#question26">Chemistry</a>
                         <a href="#question51">Maths</a>
                     </div>
-                    <% } %>
+                <% } %>
             </div>
 
             <!-- Questions Section -->
             <div class="question-section">
                 <% question.forEach((q, index) => { %>
-                    <div id="question<%= q.questionid %>">
-                        
+                    <div id="question<%= q.questionid %>" onclick="trackVisitedQuestion(<%= q.questionid %>)">
                         <h3>Question <%= index + 1 %></h3>
                         <p><%= q.questiontext %></p>
                         <div class="options">
@@ -50,7 +50,6 @@
                                 <input type="radio" name="option<%= q.questionid %>" value="D"> <%= q.optiond %>
                             </label>
                         </div>
-            
                         <div class="question-nav">
                             <% if (index > 0) { %>
                                 <a href="#question<%= question[index-1].questionid %>" class="prev-button">Previous</a>
@@ -64,7 +63,6 @@
                     </div>
                 <% }); %>
             </div>
-            
 
             <!-- Quick-access Navigation Panel -->
             <div class="right-panel navigation-panel">
@@ -72,32 +70,39 @@
                     <a href="#question<%= q.questionid %>" class="nav-card"><%= index + 1 %></a>
                 <% }); %>
             </div>
-            
-
         </div>
     </form>
 
     <script>
-        let totalDuration = <%= test.duration %> * 60; // Convert duration to seconds
+        let n = 0;
+        const visitedQuestions = new Set();
+
+        function trackVisitedQuestion(questionId) {
+            if(!visitedQuestions.has(questionId)) {
+                visitedQuestions.add(questionId);
+                n++;
+            }
+            document.getElementById('visitedCount').value = n;
+        }
+
+        let totalDuration = <%= test.duration*60 %>;
         let startTime = Date.now();
-    
+        
         function updateTimer() {
-            let elapsedTime = Math.floor((Date.now() - startTime) / 1000); // in seconds
+            let elapsedTime = Math.floor((Date.now() - startTime) / 1000);
             let timeLeft = totalDuration - elapsedTime;
     
             if(timeLeft <= 0) {
                 document.getElementById('timerDisplay').innerText = "00:00";
-                document.forms[0].submit(); // Automatically submit the form when time's up
+                document.forms[0].submit();
             } else {
                 let minutes = Math.floor(timeLeft / 60);
                 let seconds = timeLeft % 60;
                 document.getElementById('timerDisplay').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
         }
-    
+
         setInterval(updateTimer, 1000);
-    
-        // Before submitting the form, set the elapsed time to the hidden input
         document.forms[0].onsubmit = function() {
             let elapsedTime = Math.floor((Date.now() - startTime) / 1000);
             document.getElementById('timeSpent').value = elapsedTime;
@@ -106,4 +111,3 @@
 </body>
 
 </html>
-

@@ -152,7 +152,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="http://localhost:3000">Explore</a>
+              <a class="nav-link" href="javascript:void(0)">Explore</a>
             </li>
             <% if(role=='student' ){ %>
               <!-- <li class="nav-item">
@@ -163,10 +163,11 @@
                   Problems
                 </a>
                 <div class="dropdown-menu" aria-labelledby="subjectDropdown">
-                    <a class="dropdown-item" href="/questions/physics">Physics</a>
-                    <a class="dropdown-item" href="/questions/chemistry">Chemistry</a>
-                    <a class="dropdown-item" href="/questions/maths">Maths</a>
-                </div>
+                  <a class="dropdown-item" href="/questions/physics?role=<%= role %>">Physics</a>
+                  <a class="dropdown-item" href="/questions/chemistry?role=<%= role %>">Chemistry</a>
+                  <a class="dropdown-item" href="/questions/maths?role=<%= role %>">Maths</a>
+              </div>
+              
             </li>
             
             <% } %>
